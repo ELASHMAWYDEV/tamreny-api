@@ -1,7 +1,5 @@
-require("dotenv/config");
 const mongoose = require("mongoose");
-const MONGO_URI_DEVELOPMENT = process.env.MONGO_URI_DEVELOPMENT;
-const MONGO_URI_PRODUCTION = process.env.MONGO_URI_PRODUCTION;
+const { MONGO_URI_DEVELOPMENT, MONGO_URI_PRODUCTION } = require("./config");
 
 //Connect to mongodb
 const URI =
