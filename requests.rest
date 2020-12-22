@@ -4,11 +4,11 @@ Content-Type: application/json
 
 {
   "name": "Mahmoud",
-  "username": "elashmawy",
-  "email": "elashmawydev@gmail.com",
+  "username": "elahmawy",
+  "email": "elashmwydev@gmail.com",
   "password": "123456",
   "passwordConfirm": "123456",
-  "phoneNumber": "01064544529"
+  "phoneNumber": "0106544529"
 }
 
 
@@ -45,4 +45,14 @@ Authorization: Barear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjAsImlhdCI6M
 
 {
   //"_id": "0"
+}
+
+
+###delete user
+POST http://localhost:5000/api/users/delete
+Content-Type: application/json
+Authorization: Barear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjAsImlhdCI6MTYwODY2NzY4NH0.74QimJ7tgDPs7rfb9Rl7oT4hMJnmigygQQfC32Ap7HE
+
+{
+  "_id": "2"
 }
