@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
 
     /********************************************************/
   } catch (e) {
-    console.log(`Error in /users/login, error: ${e.message}`, e);
+    console.log(`Error in /article/delete, error: ${e.message}`, e);
     res.json({
       status: false,
       errors: [e.message],
