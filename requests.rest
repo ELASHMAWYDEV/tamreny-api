@@ -1,0 +1,38 @@
+###register new user
+POST http://localhost:5000/api/users/register
+Content-Type: application/json
+
+{
+  "name": "Mahmoud",
+  "username": "elashmawy",
+  "email": "elashmawydev@gmail.com",
+  "password": "123456",
+  "passwordConfirm": "123456",
+  "phoneNumber": "01064544529"
+}
+
+
+###login
+POST http://localhost:5000/api/users/login
+Content-Type: application/json
+
+{
+  "user": "elashmawy",
+  "password": "123456"
+}
+
+
+###Edit user
+POST http://localhost:5000/api/users/edit
+Content-Type: application/json
+Authorization: Barear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjAsImlhdCI6MTYwODY2NzY4NH0.74QimJ7tgDPs7rfb9Rl7oT4hMJnmigygQQfC32Ap7HE
+
+{
+  "_id": "0",
+  "name": "Mahmoud",
+  "username": "elashmawy",
+  "email": "elashmawydev@gmail.com",
+  //"password": "123456",
+  //"passwordConfirm": "123456",
+  "phoneNumber": "01064544529"
+}
