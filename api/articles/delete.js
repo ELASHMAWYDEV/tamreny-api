@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const fs = require("fs");
 const ArticleModel = require("../../models/Article");
 
 router.post("/", async (req, res) => {
@@ -19,7 +20,6 @@ router.post("/", async (req, res) => {
         errors: ["يجب ارسال رقم المقالة لحذفها"],
       });
 
-
     //Check if article exist or not
     let articleSearch = await ArticleModel.findOne({ _id: req.body._id });
     if (!articleSearch)
@@ -35,6 +35,11 @@ router.post("/", async (req, res) => {
         status: false,
         errors: ["حدث خطأ ما أثناء حذف المقالة"],
       });
+
+    //delete the  image
+    fs.unlinkSync(
+      path.join(__dirname, "..", "..", "images", articleSearch.mainImage)
+    );
 
     return res.json({
       status: true,
