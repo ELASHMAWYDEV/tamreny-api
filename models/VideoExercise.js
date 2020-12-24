@@ -9,6 +9,10 @@ const VideoExerciseSchema = new mongoose.Schema({
   title: String,
   description: String,
   videoUrl: String,
+  createDate: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 VideoExerciseSchema.plugin(autoIncreament.plugin, "VideoExercise");

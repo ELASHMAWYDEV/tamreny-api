@@ -7,6 +7,10 @@ autoIncreament.initialize(mongoose.connection);
 const ImageExercisesCategorySchema = new mongoose.Schema({
   name: String,
   image: String,
+  createDate: {
+    type: Date,
+    default: Date.now(),
+  }
 });
 
 ImageExercisesCategorySchema.plugin(

@@ -8,6 +8,10 @@ const ArticleSchema = new mongoose.Schema({
   title: String,
   content: String,
   mainImage: String,
+  createDate: {
+    type: Date,
+    default: Date.now(),
+  }
 });
 
 ArticleSchema.plugin(autoIncreament.plugin, "Article");

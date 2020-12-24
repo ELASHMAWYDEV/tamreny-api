@@ -15,6 +15,10 @@ const UserSchema = new mongoose.Schema({
     enum: ["admin", "user"],
     default: "user",
   },
+  createDate: {
+    type: Date,
+    default: Date.now(),
+  }
 });
 
 UserSchema.plugin(autoIncreament.plugin, "User");

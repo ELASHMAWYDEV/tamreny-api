@@ -8,6 +8,10 @@ const ProteinSchema = new mongoose.Schema({
   name: String,
   description: String,
   mainImage: String,
+  createDate: {
+    type: Date,
+    default: Date.now(),
+  }
 });
 
 ProteinSchema.plugin(autoIncreament.plugin, "Protein");

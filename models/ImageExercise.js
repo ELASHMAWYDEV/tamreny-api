@@ -9,6 +9,10 @@ const ImageExerciseSchema = new mongoose.Schema({
   title: String,
   description: String,
   images: [String],
+  createDate: {
+    type: Date,
+    default: Date.now(),
+  }
 });
 
 ImageExerciseSchema.plugin(autoIncreament.plugin, "ImageExercise");

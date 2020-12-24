@@ -32,6 +32,10 @@ const HallSchema = new mongoose.Schema({
     type: PointSchema,
     index: "2dsphere",
   },
+  createDate: {
+    type: Date,
+    default: Date.now(),
+  }
 });
 
 HallSchema.plugin(autoIncreament.plugin, "Hall");
