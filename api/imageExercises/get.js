@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const ImageExercisesCategory = require("../../models/ImageExercisesCategory");
+const ImageExerciseModel = require("../../models/ImageExercise");
 
 router.post("/", async (req, res) => {
   try {
     let exercises = [];
     if (req.body._id) {
-      let exerciseSearch = await ImageExercisesCategory.findOne({
+      let exerciseSearch = await ImageExerciseModel.findOne({
         _id: req.body._id,
       });
 
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
 
       exercises = [...exercises, exerciseSearch.toObject()];
     } else {
-      let exercisesSearch = await ImageExercisesCategory.find({});
+      let exercisesSearch = await ImageExerciseModel.find({});
 
       if (exercisesSearch.length == 0) {
         return res.json({
@@ -33,11 +33,16 @@ router.post("/", async (req, res) => {
 
     /********************************************************/
     //Edit the image to be url
-    exercises.map((exercise) => {
-      exercise.images.map((image) => {
-        image = `${req.protocol}://${req.headers.host}/images/image-exercises/${image}`;
-      });
-    });
+    let finalImages = [];
+    for (exercise of exercises) {
+      for (image of exercise.images) {
+        finalImages.push(
+          `${req.protocol}://${req.headers.host}/images/image-exercises/${image}`
+        );
+      }
+      exercise.images = finalImages;
+      finalImages = [];
+    }
 
     return res.json({
       status: true,

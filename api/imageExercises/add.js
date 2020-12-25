@@ -2,41 +2,55 @@ const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
-const ArticleModel = require("../../models/Article");
-const validation = require("../../validation/article");
+const ImageExerciseModel = require("../../models/ImageExercise");
+const validation = require("../../validation/imageExercise");
 
 router.post("/", async (req, res) => {
   try {
-    const article = req.body;
+    const exercise = req.body;
 
     //Validation
-    const validateArticle = await validation({ ...article, files: req.files });
-    if (!validateArticle.status) {
-      return res.json(validateArticle);
+    const validateExercise = await validation({
+      ...exercise,
+      files: req.files,
+    });
+    if (!validateExercise.status) {
+      return res.json(validateExercise);
     }
 
     /********************************************************/
 
-    let { title, content, mainImage } = validateArticle;
+    let { categoryId, title, description, images } = validateExercise;
 
-    //Save the image
-    const mainImageUniqueName = `${uuidv4()}.${mainImage.name
-      .split(".")
-      .pop()}`;
-    await mainImage.mv(
-      path.join(__dirname, "..", "..", "images", "articles", mainImageUniqueName)
-    );
+    let imagesToSave = [];
+    //Save the images
+    for (image of images) {
+      const imageUniqueName = `${uuidv4()}.${image.name.split(".").pop()}`;
+      await image.mv(
+        path.join(
+          __dirname,
+          "..",
+          "..",
+          "images",
+          "image-exercises",
+          imageUniqueName
+        )
+      );
+
+      imagesToSave.push(imageUniqueName);
+    }
 
     /********************************************************/
 
-    //Save the article to DB
-    const saveArticle = await ArticleModel.create({
+    //Save the exercise to DB
+    const saveExercise = await ImageExerciseModel.create({
+      categoryId,
       title,
-      content,
-      mainImage: mainImageUniqueName,
+      description,
+      images: imagesToSave,
     });
 
-    if (!saveArticle) {
+    if (!saveExercise) {
       return res.json({
         status: false,
         errors: ["حدث خطأ غير متوقع ، يرجي المحاولة فيما بعد"],
@@ -48,13 +62,13 @@ router.post("/", async (req, res) => {
     //Send the success response
     return res.json({
       status: true,
-      messages: ["تم اضافة المقال بنجاح"],
-      article: saveArticle,
+      messages: ["تم اضافة التمرين بنجاح"],
+      exercise: saveExercise,
     });
 
     /********************************************************/
   } catch (e) {
-    console.log(`Error in /users/register, error: ${e.message}`, e);
+    console.log(`Error in /imageExercises/add, error: ${e.message}`, e);
     res.json({
       status: false,
       errors: [e.message],

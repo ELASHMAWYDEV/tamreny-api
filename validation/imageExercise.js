@@ -1,3 +1,5 @@
+const ImageCategoryModel = require("../models/ImageExercisesCategory");
+
 module.exports = async ({ categoryId, title, description, files }) => {
   try {
     let errors = [];
@@ -15,6 +17,18 @@ module.exports = async ({ categoryId, title, description, files }) => {
         status: false,
         errors,
       };
+
+    /******************************************************/
+
+    //Check if category exist
+    let categorySearch = await ImageCategoryModel.findOne({ _id: categoryId });
+    if (!categorySearch)
+      return {
+        status: false,
+        errors: ["القسم الذي اخترته غير موجود في قاعدة البيانات"],
+      };
+
+    /******************************************************/
 
     //Length
     if (title.length <= 5) errors.push("العنوان قصير جدا");
