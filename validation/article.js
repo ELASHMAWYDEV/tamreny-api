@@ -1,7 +1,3 @@
-const emailValidator = require("email-validator");
-const bcrypt = require("bcrypt");
-const ArticleModel = require("../models/Article");
-
 module.exports = async ({ title, content, files }) => {
   try {
     let errors = [];

@@ -5,8 +5,8 @@ const router = express.Router();
 router.use("/users", require("./users/index"));
 router.use("/articles", require("./articles/index"));
 router.use("/categories", require("./categories/index"));
+router.use("/imageExersices", require("./imageExercises/index"));
 // router.use("/halls", require("./halls/index"));
-// router.use("/imageExersices", require("./imageExersices/index"));
 // router.use("/videoExersices", require("./videoExersices/index"));
 // router.use("/proteins", require("./proteins/index"));
 

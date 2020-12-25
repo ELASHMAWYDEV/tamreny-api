@@ -1,4 +1,6 @@
 *.env
 *node_modules
-images/*
+images/*/*
+!images/*
 !images/default
+*.rest
