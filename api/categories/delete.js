@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
       });
     }
 
-    let type = req.body.type;
+    let type = +req.body.type;
 
     //Validation
     if (req.body._id == undefined) {

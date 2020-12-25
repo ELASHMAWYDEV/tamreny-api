@@ -2,16 +2,11 @@ const express = require("express");
 const router = express.Router();
 const ImageCategoryModel = require("../../models/ImageExercisesCategory");
 const VideoCategoryModel = require("../../models/VideoExercisesCategory");
-const validation = require("../../validation/category");
 
 router.post("/", async (req, res) => {
   try {
-    //Validation
-    let validateCategory = await validation({ ...req.body, files: req.files });
-    if (!validateCategory.status) return res.json(validateCategory);
-
     let categories = [],
-      type = req.body.type;
+      type = +req.body.type;
 
     if (!type || ![1, 2].includes(type)) {
       return res.json({
@@ -35,7 +30,7 @@ router.post("/", async (req, res) => {
         });
       }
 
-      categories.push(categorySearch.toObject());
+      categories = [...categories, categorySearch.toObject()];
     } else {
       let categorySearch =
         type == 1
@@ -51,8 +46,14 @@ router.post("/", async (req, res) => {
         });
       }
 
-      categories.push(categorySearch);
+      categories = [...categories, ...categorySearch];
     }
+
+    /********************************************************/
+    //Edit the image to be url
+    categories.map((category) => {
+      category.image = `${req.protocol}://${req.headers.host}/images/categories/${category.image}`;
+    });
 
     return res.json({
       status: true,

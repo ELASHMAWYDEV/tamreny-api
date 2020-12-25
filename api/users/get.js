@@ -4,6 +4,7 @@ const UserModel = require("../../models/User");
 
 router.post("/", async (req, res) => {
   try {
+    console.log(req.protocol);
     //Check for permissions
     if (!(req.user && req.user.role == "admin")) {
       return res.json({

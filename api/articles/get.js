@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
         });
       }
 
-      articles.push(articleSearch.toObject());
+      articles = [...articles, articleSearch.toObject()];
     } else {
       let articlesSearch = await ArticleModel.find({});
 
@@ -26,8 +26,15 @@ router.post("/", async (req, res) => {
         });
       }
 
-      articles.push(articlesSearch);
+      articles = [...articles, ...articlesSearch];
     }
+
+    /********************************************************/
+    //Edit the image to be url
+    articles.map((article) => {
+      article.mainImage = `${req.protocol}://${req.headers.host}/images/articles/${article.mainImage}`;
+      // console.log(article);
+    });
 
     return res.json({
       status: true,

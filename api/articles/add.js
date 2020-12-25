@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
       .split(".")
       .pop()}`;
     await mainImage.mv(
-      path.join(__dirname, "..", "..", "images", mainImageUniqueName)
+      path.join(__dirname, "..", "..", "images", "articles", mainImageUniqueName)
     );
 
     /********************************************************/

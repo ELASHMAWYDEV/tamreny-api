@@ -47,12 +47,12 @@ router.post("/", async (req, res) => {
         .split(".")
         .pop()}`;
       await mainImage.mv(
-        path.join(__dirname, "..", "..", "images", mainImageUniqueName)
+        path.join(__dirname, "..", "..", "images", "articles", mainImageUniqueName)
       );
 
       //delete the old image
       fs.unlinkSync(
-        path.join(__dirname, "..", "..", "images", articleSearch.mainImage)
+        path.join(__dirname, "..", "..", "images", "articles", articleSearch.mainImage)
       );
 
       /********************************************************/

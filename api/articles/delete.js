@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
 
     //delete the  image
     fs.unlinkSync(
-      path.join(__dirname, "..", "..", "images", articleSearch.mainImage)
+      path.join(__dirname, "..", "..", "images", "articles", articleSearch.mainImage)
     );
 
     return res.json({
