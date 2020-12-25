@@ -53,9 +53,26 @@ router.post("/", async (req, res) => {
         errors: ["هذا القسم غير موجود في قاعدة البيانات"],
       });
     }
+
     /********************************************************/
 
     let { name, image } = validateCategory;
+
+    /********************************************************/
+    //Check if name exist before
+    let nameSearch =
+      type == 1
+        ? await ImageCategoryModel.findOne({ name, _id: { $ne: category._id } })
+        : type == 2
+        ? await VideoCategoryModel.findOne({ name, _id: { $ne: category._id } })
+        : null;
+
+    if (nameSearch) {
+      return res.json({
+        status: false,
+        errors: ["لقد قمت بإضافة هذا الاسم من قبل"],
+      });
+    }
 
     /********************************************************/
     //Check if image is not changed
@@ -74,7 +91,7 @@ router.post("/", async (req, res) => {
       );
 
       //delete the old image
-      fs.unlinkSync(
+      fs.existsSync(
         path.join(
           __dirname,
           "..",
@@ -83,7 +100,18 @@ router.post("/", async (req, res) => {
           "categories",
           categorySearch.image
         )
-      );
+      )
+        ? fs.unlinkSync(
+            path.join(
+              __dirname,
+              "..",
+              "..",
+              "images",
+              "categories",
+              categorySearch.image
+            )
+          )
+        : null;
 
       /********************************************************/
       //Edit the category on DB
@@ -97,7 +125,7 @@ router.post("/", async (req, res) => {
               }
             )
           : type == 2
-          ? VideoCategoryModel.updateOne(
+          ? await VideoCategoryModel.updateOne(
               { _id: category._id },
               {
                 name,
@@ -123,7 +151,7 @@ router.post("/", async (req, res) => {
               }
             )
           : type == 2
-          ? VideoCategoryModel.updateOne(
+          ? await VideoCategoryModel.updateOne(
               { _id: category._id },
               {
                 name,
@@ -145,7 +173,7 @@ router.post("/", async (req, res) => {
       type == 1
         ? await ImageCategoryModel.findOne({ _id: category._id })
         : type == 2
-        ? VideoCategoryModel.findOne({ _id: category._id })
+        ? await VideoCategoryModel.findOne({ _id: category._id })
         : null;
 
     /********************************************************/
@@ -158,7 +186,7 @@ router.post("/", async (req, res) => {
 
     /********************************************************/
   } catch (e) {
-    console.log(`Error in /users/register, error: ${e.message}`, e);
+    console.log(`Error in /categories/edit, error: ${e.message}`, e);
     res.json({
       status: false,
       errors: [e.message],

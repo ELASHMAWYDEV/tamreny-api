@@ -47,13 +47,38 @@ router.post("/", async (req, res) => {
         .split(".")
         .pop()}`;
       await mainImage.mv(
-        path.join(__dirname, "..", "..", "images", "articles", mainImageUniqueName)
+        path.join(
+          __dirname,
+          "..",
+          "..",
+          "images",
+          "articles",
+          mainImageUniqueName
+        )
       );
 
       //delete the old image
-      fs.unlinkSync(
-        path.join(__dirname, "..", "..", "images", "articles", articleSearch.mainImage)
-      );
+      fs.existsSync(
+        path.join(
+          __dirname,
+          "..",
+          "..",
+          "images",
+          "articles",
+          articleSearch.mainImage
+        )
+      )
+        ? fs.unlinkSync(
+            path.join(
+              __dirname,
+              "..",
+              "..",
+              "images",
+              "articles",
+              articleSearch.mainImage
+            )
+          )
+        : null;
 
       /********************************************************/
       //Edit the article on DB
@@ -104,7 +129,7 @@ router.post("/", async (req, res) => {
 
     /********************************************************/
   } catch (e) {
-    console.log(`Error in /users/register, error: ${e.message}`, e);
+    console.log(`Error in /articles/edit, error: ${e.message}`, e);
     res.json({
       status: false,
       errors: [e.message],

@@ -5,12 +5,15 @@ const autoIncreament = require("mongoose-auto-increment");
 autoIncreament.initialize(mongoose.connection);
 
 const VideoExercisesCategorySchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    unique: true,
+  },
   image: String,
   createDate: {
     type: Date,
     default: Date.now(),
-  }
+  },
 });
 
 VideoExercisesCategorySchema.plugin(

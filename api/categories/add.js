@@ -25,6 +25,21 @@ router.post("/", async (req, res) => {
 
     let { name, image } = validateCategory;
 
+    //Check if name exist
+    let categorySearch =
+      type == 1
+        ? await ImageCategoryModel.findOne({ name })
+        : type == 2
+        ? await VideoCategoryModel.findOne({ name })
+        : null;
+
+    if (categorySearch) {
+      return res.json({
+        status: false,
+        errors: ["لقد قمت بإضافة هذا الاسم من قبل"],
+      });
+    }
+    /***********************************************/
     //Save the image
     const imageUniqueName = `${uuidv4()}.${image.name.split(".").pop()}`;
     await image.mv(
