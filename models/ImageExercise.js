@@ -15,7 +15,7 @@ const ImageExerciseSchema = new mongoose.Schema({
   }
 });
 
-ImageExerciseSchema.plugin(autoIncreament.plugin, "ImageExercise");
+ImageExerciseSchema.plugin(autoIncreament.plugin,  { model: "ImageExercise", startAt: 1 });
 
 module.exports = mongoose.model(
   "ImageExercise",

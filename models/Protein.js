@@ -14,6 +14,6 @@ const ProteinSchema = new mongoose.Schema({
   }
 });
 
-ProteinSchema.plugin(autoIncreament.plugin, "Protein");
+ProteinSchema.plugin(autoIncreament.plugin, { model: "Protein", startAt: 1 });
 
 module.exports = mongoose.model("Protein", ProteinSchema, "proteins");

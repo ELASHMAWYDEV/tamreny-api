@@ -18,7 +18,7 @@ const ImageExercisesCategorySchema = new mongoose.Schema({
 
 ImageExercisesCategorySchema.plugin(
   autoIncreament.plugin,
-  "ImageExercisesCategory"
+  { model: "ImageExercisesCategory", startAt: 1 }
 );
 
 module.exports = mongoose.model(

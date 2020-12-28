@@ -16,10 +16,10 @@ const VideoExercisesCategorySchema = new mongoose.Schema({
   },
 });
 
-VideoExercisesCategorySchema.plugin(
-  autoIncreament.plugin,
-  "VideoExercisesCategory"
-);
+VideoExercisesCategorySchema.plugin(autoIncreament.plugin, {
+  model: "VideoExercisesCategory",
+  startAt: 1,
+});
 
 module.exports = mongoose.model(
   "VideoExercisesCategory",

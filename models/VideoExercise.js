@@ -15,7 +15,10 @@ const VideoExerciseSchema = new mongoose.Schema({
   },
 });
 
-VideoExerciseSchema.plugin(autoIncreament.plugin, "VideoExercise");
+VideoExerciseSchema.plugin(autoIncreament.plugin, {
+  model: "VideoExercise",
+  startAt: 1,
+});
 
 module.exports = mongoose.model(
   "VideoExercise",

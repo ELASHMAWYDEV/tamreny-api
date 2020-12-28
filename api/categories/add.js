@@ -62,6 +62,7 @@ router.post("/", async (req, res) => {
 
     return res.json({
       status: true,
+      messages: ["تمت اضافة القسم بنجاح"],
       category: categorySave,
     });
 

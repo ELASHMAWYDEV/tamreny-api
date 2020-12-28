@@ -21,6 +21,6 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-UserSchema.plugin(autoIncreament.plugin, "User");
+UserSchema.plugin(autoIncreament.plugin, { model: "User", startAt: 1 });
 
 module.exports = mongoose.model("User", UserSchema, "users");

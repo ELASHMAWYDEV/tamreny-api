@@ -38,6 +38,6 @@ const HallSchema = new mongoose.Schema({
   }
 });
 
-HallSchema.plugin(autoIncreament.plugin, "Hall");
+HallSchema.plugin(autoIncreament.plugin, { model: "Hall", startAt: 1 });
 
 module.exports = mongoose.model("Hall", HallSchema, "halls");

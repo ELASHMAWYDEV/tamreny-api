@@ -11,9 +11,9 @@ const ArticleSchema = new mongoose.Schema({
   createDate: {
     type: Date,
     default: Date.now(),
-  }
+  },
 });
 
-ArticleSchema.plugin(autoIncreament.plugin, "Article");
+ArticleSchema.plugin(autoIncreament.plugin, { model: "Article", startAt: 1 });
 
 module.exports = mongoose.model("Article", ArticleSchema, "articles");

@@ -37,9 +37,27 @@ router.post("/", async (req, res) => {
       });
 
     //delete the  image
-    fs.unlinkSync(
-      path.join(__dirname, "..", "..", "images", "articles", articleSearch.mainImage)
-    );
+    fs.existsSync(
+      path.join(
+        __dirname,
+        "..",
+        "..",
+        "images",
+        "articles",
+        articleSearch.mainImage
+      )
+    )
+      ? fs.unlinkSync(
+          path.join(
+            __dirname,
+            "..",
+            "..",
+            "images",
+            "articles",
+            articleSearch.mainImage
+          )
+        )
+      : null;
 
     return res.json({
       status: true,
