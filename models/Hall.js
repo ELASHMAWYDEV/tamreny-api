@@ -11,7 +11,7 @@ const SubscriptionSchema = new mongoose.Schema({
 
 const PointSchema = new mongoose.Schema({
   type: {
-    type: "Point",
+    type: String,
     enum: ["Point"],
     default: "Point",
   },

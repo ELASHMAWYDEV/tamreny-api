@@ -6,7 +6,7 @@ router.use("/users", require("./users/index"));
 router.use("/articles", require("./articles/index"));
 router.use("/categories", require("./categories/index"));
 router.use("/exercises", require("./exercises/index"));
-// router.use("/halls", require("./halls/index"));
+router.use("/halls", require("./halls/index"));
 // router.use("/videoExersices", require("./videoExersices/index"));
 // router.use("/proteins", require("./proteins/index"));
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 const express = require("express");
 const router = express.Router();
 const ImageExerciseModel = require("../../models/ImageExercise");
@@ -76,7 +77,7 @@ router.post("/", async (req, res) => {
 
     /********************************************************/
     //Edit the image to be url
-    switch (type) {
+    switch (+type) {
       case 1:
         let finalImages = [];
         for (exercise of exercises) {
