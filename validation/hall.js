@@ -1,11 +1,24 @@
-module.exports = async ({ title, content, files }) => {
+module.exports = async ({
+  files,
+  name,
+  city,
+  brief,
+  subscriptions,
+  location,
+}) => {
   try {
     let errors = [];
 
     //Required
-    if (!(files && files.mainImage)) errors.push("يجب رفع صورة للمقال");
-    if (!title) errors.push("يجب وضع عنوان للمقال");
-    if (!content) errors.push("يجب كتابة محتوي المقال");
+    if (!(files && files.images.length == 0))
+      errors.push("يجب رفع صورة واحدة علي الأقل");
+    if (!name) errors.push("يجب كتابة اسم القاعة");
+    if (!city) errors.push("يجب كتابة اسم المدينة الموجودة بها القاعة");
+    if (!brief) errors.push("يجب كتابة نبذة عن القاعة");
+    if (subscriptions && subscriptions.length == 0)
+      errors.push("يجب كتابة أنواع الاشتراكات");
+    if (location && !location.lat && !location.lng)
+      errors.push("يجب تحديد مكان القاعة علي الخريطة");
 
     //Send any empty errors
     if (errors.length != 0)
@@ -14,16 +27,20 @@ module.exports = async ({ title, content, files }) => {
         errors,
       };
 
-    //Length
-    if (title.length <= 10) errors.push("العنوان قصير جدا");
-    if (content.length <= 50) errors.push("محتوي المقال قصير جدا");
-
     //Image validation
-    let mainImage = files.mainImage;
-    let extention = mainImage.name.split(".").pop();
+    let images = files.images;
+    //add the extension property to the image
+    images = images.map((image) => {
+      image.extension = image.name.split(".").pop();
+      return image;
+    });
 
-    if (!["jpg", "png", "jpeg"].includes(extention))
-      errors.push("يجب أن يكون امتداد الصورة png أو jpeg أو jpg فقط");
+    for (let image of images) {
+      if (!["jpg", "png", "jpeg"].includes(image.extension)) {
+        errors.push("يجب أن يكون امتداد الصور png أو jpeg أو jpg فقط");
+        break;
+      }
+    }
 
     //Send any empty errors
     if (errors.length != 0)
@@ -34,9 +51,14 @@ module.exports = async ({ title, content, files }) => {
 
     return {
       status: true,
-      title,
-      content,
-      mainImage,
+      hall: {
+        name,
+        city,
+        brief,
+        subscriptions,
+        location,
+        images,
+      },
     };
   } catch (e) {
     return {

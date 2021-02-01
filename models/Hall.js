@@ -25,7 +25,6 @@ const HallSchema = new mongoose.Schema({
   name: String,
   city: String,
   images: [String],
-  videoUrl: String,
   brief: String,
   subscribtions: [SubscriptionSchema],
   location: {
@@ -35,7 +34,7 @@ const HallSchema = new mongoose.Schema({
   createDate: {
     type: Date,
     default: Date.now(),
-  }
+  },
 });
 
 HallSchema.plugin(autoIncreament.plugin, { model: "Hall", startAt: 1 });

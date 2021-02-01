@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
-const ArticleModel = require("../../models/Article");
-const validation = require("../../validation/article");
+const HallModel = require("../../models/Hall");
+const validation = require("../../validation/hall");
 
 router.post("/", async (req, res) => {
   try {
@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
     /********************************************************/
 
     //Save the article to DB
-    const saveArticle = await ArticleModel.create({
+    const saveArticle = await HallModel.create({
       title,
       content,
       mainImage: mainImageUniqueName,

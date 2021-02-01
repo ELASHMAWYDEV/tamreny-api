@@ -23,6 +23,14 @@ app.use(
 //Api
 app.use("/api", checkToken, require("./api/index"));
 
+//Youtube Player
+app.get("/play-youtube", (req, res) => {
+  if (!req.query.videoId) {
+    return res.send("يجب وضع رقم تعريف الفيديو علي يوتيوب")
+  }
+  res.sendFile(path.join(__dirname, "youtube-player.html"));
+});
+
 /******************************************************** */
 
 //Serve images --> static

@@ -1,6 +1,8 @@
+import { useEffect } from "react";
+import { useAuthContext } from "../../providers";
+
 //Styles
 import "./style.scss";
-
 
 //Assets
 // @ts-ignore
@@ -9,6 +11,8 @@ import LockImage from "../../assets/img/lock.svg";
 import ProfileImage from "../../assets/img/profile.svg";
 
 const LoginForm = () => {
+  const { setIsLoggedIn } = useAuthContext();
+
   return (
     <div className="login-container">
       <div className="login-box">
@@ -37,7 +41,11 @@ const LoginForm = () => {
                 />
               </div>
               <div className="input-item">
-                <button className="btn-login" type="submit" name="">
+                <button
+                  className="btn-login"
+                  type="submit"
+                  onClick={() => setIsLoggedIn(true)}
+                >
                   تسجيل الدخول
                 </button>
               </div>

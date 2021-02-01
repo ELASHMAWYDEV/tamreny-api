@@ -8,7 +8,7 @@ const VideoExerciseSchema = new mongoose.Schema({
   categoryId: { type: Number, ref: "VideoExercisesCategory", required: true },
   title: String,
   description: String,
-  videoUrl: String,
+  videoId: String,
   createDate: {
     type: Date,
     default: Date.now(),
