@@ -11,7 +11,7 @@ const ProteinSchema = new mongoose.Schema({
   createDate: {
     type: Date,
     default: Date.now(),
-  }
+  },
 });
 
 ProteinSchema.plugin(autoIncreament.plugin, { model: "Protein", startAt: 1 });
