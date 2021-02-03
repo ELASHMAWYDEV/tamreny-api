@@ -8,5 +8,6 @@ router.use("/categories", require("./categories/index"));
 router.use("/exercises", require("./exercises/index"));
 router.use("/halls", require("./halls/index"));
 router.use("/proteins", require("./proteins/index"));
+router.use("/products", require("./products/index"));
 
 module.exports = router;
