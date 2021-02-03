@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
 
         let imagesToSave = [];
         //Save the images
-        for (image of images) {
+        for (let image of images) {
           const imageUniqueName = `${uuidv4()}.${image.name.split(".").pop()}`;
           await image.mv(
             path.join(

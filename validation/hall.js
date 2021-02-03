@@ -51,14 +51,12 @@ module.exports = async ({
 
     return {
       status: true,
-      hall: {
-        name,
-        city,
-        brief,
-        subscriptions,
-        location,
-        images,
-      },
+      name,
+      city,
+      brief,
+      subscriptions,
+      location,
+      images,
     };
   } catch (e) {
     return {

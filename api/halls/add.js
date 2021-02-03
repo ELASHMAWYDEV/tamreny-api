@@ -7,36 +7,50 @@ const validation = require("../../validation/hall");
 
 router.post("/", async (req, res) => {
   try {
-    const article = req.body;
+    let hall = req.body;
+
+    //Check for permissions
+    if (!(req.user && req.user.role == "admin")) {
+      return res.json({
+        status: false,
+        errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],
+      });
+    }
 
     //Validation
-    const validateArticle = await validation({ ...article, files: req.files });
-    if (!validateArticle.status) {
-      return res.json(validateArticle);
+    const validateHall = await validation({ ...hall, files: req.files });
+    if (!validateHall.status) {
+      return res.json(validateHall);
     }
 
     /********************************************************/
 
-    let { title, content, mainImage } = validateArticle;
+    let { name, city, brief, subscriptions, location, images } = validateHall;
 
-    //Save the image
-    const mainImageUniqueName = `${uuidv4()}.${mainImage.name
-      .split(".")
-      .pop()}`;
-    await mainImage.mv(
-      path.join(__dirname, "..", "..", "images", "articles", mainImageUniqueName)
-    );
+    let imagesToSave = [];
+    //Save the images
+    for (let image of images) {
+      const imageUniqueName = `${uuidv4()}.${image.name.split(".").pop()}`;
+      await image.mv(
+        path.join(__dirname, "..", "..", "images", "halls", imageUniqueName)
+      );
+
+      imagesToSave.push(imageUniqueName);
+    }
 
     /********************************************************/
 
     //Save the article to DB
-    const saveArticle = await HallModel.create({
-      title,
-      content,
-      mainImage: mainImageUniqueName,
+    const saveHall = await HallModel.create({
+      name,
+      city,
+      brief,
+      subscriptions,
+      location,
+      images: imagesToSave,
     });
 
-    if (!saveArticle) {
+    if (!saveHall) {
       return res.json({
         status: false,
         errors: ["حدث خطأ غير متوقع ، يرجي المحاولة فيما بعد"],
@@ -48,13 +62,13 @@ router.post("/", async (req, res) => {
     //Send the success response
     return res.json({
       status: true,
-      messages: ["تم اضافة المقال بنجاح"],
-      article: saveArticle,
+      messages: ["تم اضافة القاعة بنجاح"],
+      hall: saveHall,
     });
 
     /********************************************************/
   } catch (e) {
-    console.log(`Error in /users/register, error: ${e.message}`, e);
+    console.log(`Error in /halls/add, error: ${e.message}`, e);
     res.json({
       status: false,
       errors: [e.message],

@@ -3,6 +3,7 @@ const app = express();
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const { checkToken } = require("./helpers/jwt");
 const PORT = process.env.PORT || 5000;
@@ -12,7 +13,8 @@ require("./db");
 
 //Middlewares
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -26,7 +28,7 @@ app.use("/api", checkToken, require("./api/index"));
 //Youtube Player
 app.get("/play-youtube", (req, res) => {
   if (!req.query.videoId) {
-    return res.send("يجب وضع رقم تعريف الفيديو علي يوتيوب")
+    return res.send("يجب وضع رقم تعريف الفيديو علي يوتيوب");
   }
   res.sendFile(path.join(__dirname, "youtube-player.html"));
 });

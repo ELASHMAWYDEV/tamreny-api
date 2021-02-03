@@ -9,6 +9,14 @@ router.post("/", async (req, res) => {
   try {
     const article = req.body;
 
+    //Check for permissions
+    if (!(req.user && req.user.role == "admin")) {
+      return res.json({
+        status: false,
+        errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],
+      });
+    }
+
     //Validation
     const validateArticle = await validation({ ...article, files: req.files });
     if (!validateArticle.status) {
@@ -24,7 +32,14 @@ router.post("/", async (req, res) => {
       .split(".")
       .pop()}`;
     await mainImage.mv(
-      path.join(__dirname, "..", "..", "images", "articles", mainImageUniqueName)
+      path.join(
+        __dirname,
+        "..",
+        "..",
+        "images",
+        "articles",
+        mainImageUniqueName
+      )
     );
 
     /********************************************************/

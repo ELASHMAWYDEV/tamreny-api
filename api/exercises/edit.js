@@ -49,7 +49,7 @@ router.post("/", async (req, res) => {
         /********************************************************/
         //Check if images are not changed
         let imagesToSave = [];
-        for (image of validateExercise.images) {
+        for (let image of validateExercise.images) {
           if (exerciseSearch.images.indexOf(image.name) == -1) {
             //Save the new image
             const imageUniqueName = `${uuidv4()}.${image.name
