@@ -10,5 +10,6 @@ router.use("/halls", require("./halls/index"));
 router.use("/proteins", require("./proteins/index"));
 router.use("/products", require("./products/index"));
 router.use("/paymentMethods", require("./paymentMethods/index"));
+router.use("/orders", require("./orders/index"));
 
 module.exports = router;

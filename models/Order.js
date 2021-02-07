@@ -5,6 +5,11 @@ const autoIncreament = require("mongoose-auto-increment");
 autoIncreament.initialize(mongoose.connection);
 
 const OrderSchema = new mongoose.Schema({
+  userId: {
+    type: Number,
+    ref: "User",
+    required: true,
+  },
   productId: {
     type: Number,
     ref: "Product",
@@ -15,8 +20,13 @@ const OrderSchema = new mongoose.Schema({
     ref: "PaymentMethod",
     required: true,
   },
-  total: Number,
-  status: Number,
+  statusId: {
+    type: Number,
+    default: 1,
+    //1 =>لم يتم الدفع
+    //2 => تم الدفع
+    //3 => ملغي
+  },
   paymentImage: String,
   createDate: {
     type: Date,
