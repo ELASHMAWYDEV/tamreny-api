@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     if (!(req.user && (req.user._id == user._id || req.user.role == "admin"))) {
       return res.json({
         status: false,
-        errros: ["ليس لديك صلاحية تعديل هذا الحساب"],
+        errors: ["ليس لديك صلاحية تعديل هذا الحساب"],
       });
     }
 
@@ -34,12 +34,15 @@ router.post("/", async (req, res) => {
     if (result.nModified == 0) {
       return res.json({
         status: false,
-        errros: ["لم تقم بتغيير أي شئ !"],
+        errors: ["لم تقم بتغيير أي شئ !"],
       });
     }
 
     //Get the user after update
     let userSearch = await UserModel.findOne({ _id: user._id });
+    
+    delete userSearch.password;
+
     return res.json({
       status: true,
       messages: ["تم تعديل البيانات بنجاح"],

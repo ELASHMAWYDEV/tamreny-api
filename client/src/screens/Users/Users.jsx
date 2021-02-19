@@ -1,17 +1,38 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNotifierContext } from "../../providers";
+
 //Styles
 import "./style.scss";
 
-//Components
-import { Header } from "../../components";
 
 //Assets
 //@ts-ignore
 import TrashIcon from "../../assets/img/trash.svg";
 
 const Users = () => {
+  const { setNotifiers } = useNotifierContext();
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    try {
+      let response = await axios.post("/api/users/get");
+      let data = await response.data;
+
+      if (!data.status) return setNotifiers({ errors: data.errors });
+      setUsers(data.users);
+    } catch (e) {
+      alert(e.message);
+    }
+  };
+
   return (
     <>
-      <Header />
       <div className="main-container">
         <div className="page-position">
           <h2>لوحة التحكم</h2>
@@ -71,34 +92,39 @@ const Users = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>elashmawydev</td>
-                    <td>elashmawydev@gmail.com</td>
-                    <td>محمود العشماوي</td>
-                    <td>01064544529</td>
-                    <td>مدير</td>
-                    <td>14/04/2001</td>
-                    <td className="action">
-                      <button
-                        onClick={() => "get_user_edit(this)"}
-                        className="btn-edit edit_user_btn"
-                        data-user-id="<?= $user->id; ?>"
-                      >
-                        تعديل
-                      </button>
-                      <img
-                        onClick={() =>
-                          "popupBox('.delete-user-box'); get_user_delete(this);"
-                        }
-                        src={TrashIcon}
-                        alt="حذف المستخدم"
-                        title="حذف المستخدم"
-                        data-user-id="<?= $user->id; ?>"
-                        className="delete_user_btn"
-                      />
-                    </td>
-                  </tr>
+                  {users.length != 0 &&
+                    users.map((user, i) => {
+                      return (
+                        <tr key={i}>
+                          <td>{user._id}</td>
+                          <td>{user.username}</td>
+                          <td>{user.email}</td>
+                          <td>{user.name}</td>
+                          <td>{user.phoneNumber}</td>
+                          <td>{user.role}</td>
+                          <td>{user.createDate}</td>
+                          <td className="action">
+                            <button
+                              onClick={() => "get_user_edit(this)"}
+                              className="btn-edit edit_user_btn"
+                              data-user-id="<?= $user->id; ?>"
+                            >
+                              تعديل
+                            </button>
+                            <img
+                              onClick={() =>
+                                "popupBox('.delete-user-box'); get_user_delete(this);"
+                              }
+                              src={TrashIcon}
+                              alt="حذف المستخدم"
+                              title="حذف المستخدم"
+                              data-user-id="<?= $user->id; ?>"
+                              className="delete_user_btn"
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>

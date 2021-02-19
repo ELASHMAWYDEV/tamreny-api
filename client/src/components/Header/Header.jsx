@@ -1,6 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import { useAuthContext } from "../../providers";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useAuthContext, useNotifierContext } from "../../providers";
+
 //Style
 import "./style.scss";
 
@@ -19,6 +22,12 @@ import Logo from "../../assets/img/logo.png";
 const Header = () => {
   const { pathname } = useLocation();
   const { setIsLoggedIn } = useAuthContext();
+  const { setNotifiers } = useNotifierContext();
+  const [user, setUser] = useState(Cookies.getJSON("user_data"));
+  const [passwordObj, setPasswordObj] = useState({
+    password: "",
+    passwordConfirm: "",
+  });
 
   const [sidebarActive, setSidebarActive] = useState(false);
   const [floatingBoxActive, setFloatingBoxActive] = useState(false);
@@ -28,42 +37,47 @@ const Header = () => {
   const settingsBoxRef = useRef(null);
 
   useEffect(() => {
-    window.addEventListener("mouseup", sidebarHandler);
-    window.addEventListener("mouseup", floatingBoxHandler);
-    window.addEventListener("mouseup", settingsBoxHandler);
+    console.log(Cookies.getJSON("user_data"));
+    window.addEventListener("mouseup", containerHandler);
+
+    return () => {
+      window.removeEventListener("mouseup", containerHandler);
+    };
   }, []);
 
-  const sidebarHandler = (e) => {
+  const containerHandler = (e) => {
     e.preventDefault();
 
     if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
       setSidebarActive(false);
     }
-    return () => {
-      window.removeEventListener("mouseup", sidebarHandler);
-    };
-  };
-
-  const floatingBoxHandler = (e) => {
-    e.preventDefault();
 
     if (floatingBoxRef.current && !floatingBoxRef.current.contains(e.target)) {
       setFloatingBoxActive(false);
     }
-    return () => {
-      window.removeEventListener("mouseup", floatingBoxHandler);
-    };
-  };
-
-  const settingsBoxHandler = (e) => {
-    e.preventDefault();
 
     if (settingsBoxRef.current && !settingsBoxRef.current.contains(e.target)) {
       setSettingsBoxActive(false);
     }
-    return () => {
-      window.removeEventListener("mouseup", settingsBoxHandler);
-    };
+  };
+
+  const editUser = async () => {
+    try {
+      let response = await axios.post("/api/users/edit", {
+        ...user,
+        ...passwordObj,
+      });
+      let data = await response.data;
+
+      if (!data.status) return setNotifiers({ errors: data.errors });
+
+      setNotifiers({ success: data.messages });
+      setUser(data.user);
+      setPasswordObj({ password: "", passwordConfirm: "" });
+      Cookies.set("user_data", JSON.stringify(data.user));
+    } catch (e) {
+      alert(e.message);
+    }
   };
 
   return (
@@ -83,7 +97,7 @@ const Header = () => {
             <div className="user-img">
               <img src={UserIcon} alt="User" />
             </div>
-            <div className="user-name">محمود العشماوي</div>
+            <div className="user-name">{user.name}</div>
           </div>
           <span></span>
           <div
@@ -186,15 +200,11 @@ const Header = () => {
         style={{ display: settingsBoxActive ? "flex" : "none" }}
       >
         <div className="settings-box" ref={settingsBoxRef}>
-          <div className="closing" onClick={() => "closeBox(this)"}>
+          <div className="closing" onClick={() => setSettingsBoxActive(false)}>
             <span></span>
             <span></span>
           </div>
-          <form
-            method="POST"
-            id="update_account_settings_form"
-            onSubmit={() => "update_account_settings(this)"}
-          >
+          <form method="POST" onSubmit={(e) => e.preventDefault()}>
             <div className="input-items">
               <div className="input-item">
                 <label>اسم المستخدم</label>
@@ -202,7 +212,10 @@ const Header = () => {
                   type="text"
                   name="username"
                   placeholder="اسم المستخدم"
-                  value="<?= $_SESSION['username']; ?>"
+                  defaultValue={user.username}
+                  onChange={(e) =>
+                    setUser({ ...user, username: e.target.value })
+                  }
                 />
               </div>
               <div className="input-item">
@@ -211,7 +224,8 @@ const Header = () => {
                   type="text"
                   name="email"
                   placeholder="البريد الالكتروني"
-                  value="<?= $_SESSION['email']; ?>"
+                  defaultValue={user.email}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
                 />
               </div>
               <div className="input-item">
@@ -220,7 +234,8 @@ const Header = () => {
                   type="text"
                   name="name"
                   placeholder="الاسم"
-                  value="<?= $_SESSION['name']; ?>"
+                  defaultValue={user.name}
+                  onChange={(e) => setUser({ ...user, name: e.target.value })}
                 />
               </div>
               <div className="input-item">
@@ -229,11 +244,18 @@ const Header = () => {
                   type="text"
                   name="phone"
                   placeholder="رقم الهاتف"
-                  value="<?= $_SESSION['phone']; ?>"
+                  defaultValue={user.phoneNumber}
+                  onChange={(e) =>
+                    setUser({ ...user, phoneNumber: e.target.value })
+                  }
                 />
               </div>
               <div className="input-item">
-                <button className="save-btn" type="submit">
+                <button
+                  className="save-btn"
+                  type="submit"
+                  onClick={() => editUser()}
+                >
                   حفظ البيانات
                 </button>
               </div>
@@ -241,11 +263,7 @@ const Header = () => {
           </form>
           <span></span>
           <h3>تغيير كلمة المرور</h3>
-          <form
-            method="POST"
-            id="change_account_password_form"
-            onSubmit={() => "change_account_password(this)"}
-          >
+          <form method="POST" onSubmit={(e) => e.preventDefault()}>
             <div className="input-items">
               <div className="input-item">
                 <label>كلمة المرور الجديدة</label>
@@ -253,6 +271,10 @@ const Header = () => {
                   type="password"
                   name="pass1"
                   placeholder="كلمة المرور الجديدة"
+                  value={passwordObj.password}
+                  onChange={(e) =>
+                    setPasswordObj({ ...passwordObj, password: e.target.value })
+                  }
                 />
               </div>
               <div className="input-item">
@@ -261,10 +283,21 @@ const Header = () => {
                   type="password"
                   name="pass2"
                   placeholder="تأكيد كلمة المرور"
+                  value={passwordObj.passwordConfirm}
+                  onChange={(e) =>
+                    setPasswordObj({
+                      ...passwordObj,
+                      passwordConfirm: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-item">
-                <button className="save-btn" type="submit">
+                <button
+                  className="save-btn"
+                  type="submit"
+                  onClick={() => editUser()}
+                >
                   تحديث كلمة المرور
                 </button>
               </div>

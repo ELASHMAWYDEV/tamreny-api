@@ -29,10 +29,13 @@ router.post("/", async (req, res) => {
 
     //Send the jwt token with the success response
     const accessToken = await createToken({ _id: saveUser._id });
+
+    res.cookie("access_token", accessToken);
     return res.json({
       status: true,
       messages: ["تم التسجيل بنجاح"],
       accessToken,
+      user: validateUser.user,
     });
 
     /********************************************************/

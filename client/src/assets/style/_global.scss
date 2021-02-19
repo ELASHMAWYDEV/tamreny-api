@@ -177,7 +177,6 @@ $dark-blue: #0984e3;
   margin: 30px auto;
   z-index: 18;
   @include flex;
-  display: none;
 }
 /*****************************/
 
@@ -461,7 +460,7 @@ $dark-blue: #0984e3;
   }
   td.action {
     @include flex;
-    justify-content: start;
+    justify-content: flex-start;
   }
   tr {
     &:nth-child(odd) {
@@ -484,7 +483,7 @@ $dark-blue: #0984e3;
   }
   .pagination {
     @include flex;
-    justify-content: start;
+    justify-content: flex-start;
     margin: 20px 0;
     button {
       display: inline-block;
@@ -672,16 +671,15 @@ footer {
   flex-direction: column;
   width: 500px;
   margin: auto;
-  display: none;
   .alarm {
-    animation: alarm 3s ease 1;
+    animation: alarm 4s ease 1;
     border-radius: 10px;
     padding: 15px;
     color: $white;
     font-size: 18px;
     width: 100%;
     @include flex;
-    justify-content: start;
+    justify-content: flex-start;
     font-weight: 500;
     margin-bottom: 15px;
     &-success {
@@ -697,11 +695,11 @@ footer {
       opacity: 0;
       transform: translateY(-40px);
     }
-    25% {
+    20% {
       opacity: 1;
       transform: translateY(0px);
     }
-    75% {
+    80% {
       opacity: 1;
       transform: translateY(0px);
     }

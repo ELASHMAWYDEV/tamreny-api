@@ -4,7 +4,7 @@ const UserModel = require("../../models/User");
 
 router.post("/", async (req, res) => {
   try {
-    console.log(req.protocol);
+
     //Check for permissions
     if (!(req.user && req.user.role == "admin")) {
       return res.json({
@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
         });
       }
 
-      users.push(usersSearch);
+      users = [...users, ...usersSearch];
     }
 
     return res.json({

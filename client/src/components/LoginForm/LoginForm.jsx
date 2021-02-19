@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import { useAuthContext } from "../../providers";
+import { useState } from "react";
+import { useAuthContext, useNotifierContext } from "../../providers";
+import axios from "axios";
 
 //Styles
 import "./style.scss";
@@ -12,6 +13,26 @@ import ProfileImage from "../../assets/img/profile.svg";
 
 const LoginForm = () => {
   const { setIsLoggedIn } = useAuthContext();
+  const { setNotifiers } = useNotifierContext();
+
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async () => {
+    try {
+      let response = await axios.post("/api/users/login", { user, password });
+      let data = await response.data;
+
+      if (!data.status) {
+        return setNotifiers({ errors: data.errors });
+      }
+
+      setNotifiers({ success: data.messages });
+      setIsLoggedIn(true);
+    } catch (e) {
+      alert(e.message);
+    }
+  };
 
   return (
     <div className="login-container">
@@ -19,7 +40,7 @@ const LoginForm = () => {
         <div className="head">
           <h2>تسجيل الدخول</h2>
         </div>
-        <form method="POST">
+        <form method="POST" onSubmit={(e) => e.preventDefault()}>
           <div className="content">
             <div className="input-items">
               <div className="input-item">
@@ -29,6 +50,8 @@ const LoginForm = () => {
                   name="user"
                   placeholder="اسم المستخدم أو البريد الالكتروني"
                   required
+                  value={user}
+                  onChange={(e) => setUser(e.target.value)}
                 />
               </div>
               <div className="input-item">
@@ -38,13 +61,15 @@ const LoginForm = () => {
                   name="pass"
                   placeholder="كلمة المرور"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="input-item">
                 <button
                   className="btn-login"
                   type="submit"
-                  onClick={() => setIsLoggedIn(true)}
+                  onClick={() => login()}
                 >
                   تسجيل الدخول
                 </button>

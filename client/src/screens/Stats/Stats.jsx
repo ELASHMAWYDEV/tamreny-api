@@ -1,15 +1,10 @@
-
 //Styles
 import "./style.scss";
 
-//Components
-import { Header } from "../../components";
-
 const Stats = () => {
-
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         <div className="page-position">
           <h2>لوحة التحكم</h2>
