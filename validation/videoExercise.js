@@ -11,7 +11,7 @@ module.exports = async ({ categoryId, title, description, videoUrl }) => {
     if (!videoUrl) errors.push("يجب وضع رابط الفيديو");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,
@@ -35,13 +35,13 @@ module.exports = async ({ categoryId, title, description, videoUrl }) => {
 
     //Url validation
     if (
-      videoUrl.toLowerCase().indexOf("youtube.com") == -1 &&
-      videoUrl.toLowerCase().indexOf("youtu.be") == -1
+      videoUrl.toLowerCase().indexOf("youtube.com") === -1 &&
+      videoUrl.toLowerCase().indexOf("youtu.be") === -1
     )
       errors.push("يجب وضع رابط من اليوتيوب فقط");
 
     //Send any errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,

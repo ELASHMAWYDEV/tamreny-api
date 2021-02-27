@@ -19,11 +19,11 @@ router.post("/", async (req, res) => {
 
     if (_id) {
       let exerciseSearch =
-        type == 1
+        type === 1
           ? await ImageExerciseModel.findOne({
               _id,
             })
-          : type == 2
+          : type === 2
           ? await VideoExerciseModel.findOne({
               _id,
             })
@@ -39,17 +39,17 @@ router.post("/", async (req, res) => {
       exercises = [...exercises, exerciseSearch.toObject()];
     } else if (categoryId > 0) {
       let exercisesSearch =
-        type == 1
+        type === 1
           ? await ImageExerciseModel.find({
               categoryId,
             })
-          : type == 2
+          : type === 2
           ? await VideoExerciseModel.find({
               categoryId,
             })
           : null;
 
-      if (exercisesSearch.length == 0) {
+      if (exercisesSearch.length === 0) {
         return res.json({
           status: false,
           errors: ["لا يوجد تمارين"],
@@ -59,13 +59,13 @@ router.post("/", async (req, res) => {
       exercises = [...exercises, ...exercisesSearch];
     } else {
       let exercisesSearch =
-        type == 1
+        type === 1
           ? await ImageExerciseModel.find({})
-          : type == 2
+          : type === 2
           ? await VideoExerciseModel.find({})
           : null;
 
-      if (exercisesSearch.length == 0) {
+      if (exercisesSearch.length === 0) {
         return res.json({
           status: false,
           errors: ["لا يوجد تمارين"],

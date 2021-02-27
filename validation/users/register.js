@@ -22,7 +22,7 @@ module.exports = async ({
     if (!phoneNumber) errors.push("يجب كتابة رقم الهاتف");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,
@@ -37,7 +37,7 @@ module.exports = async ({
       errors.push("رقم الهاتف مسجل من قبل");
 
     //Password
-    if (password != passwordConfirm)
+    if (password !== passwordConfirm)
       errors.push("يجب أن تكون كلمة المرور وتأكيد كلمة المرور متطابقان");
     if (password.length < 6)
       errors.push("يجب أن تحتوي كلمة المرور علي 6 أحرف علي الأقل");
@@ -46,7 +46,7 @@ module.exports = async ({
     if (!emailValidator.validate(email))
       errors.push("هذا البريد الالكتروني غير صالح");
 
-    if (errors.length == 0) {
+    if (errors.length === 0) {
       //hash password
       password = await bcrypt.hash(password, 10);
 

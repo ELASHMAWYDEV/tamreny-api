@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
     } else {
       let productsSearch = await ProductModel.find({});
 
-      if (productsSearch.length == 0) {
+      if (productsSearch.length === 0) {
         return res.json({
           status: false,
           errors: ["لا يوجد منتجات لعرضها"],

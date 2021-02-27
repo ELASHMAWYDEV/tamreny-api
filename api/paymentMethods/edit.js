@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
     if (!paymentMethod.description)
       errors.push("يجب كتابة خطوات وتفاصيل طريقة الدفع لكي يراها العميل");
 
-    if (errors.length != 0) {
+    if (errors.length !== 0) {
       return res.json({
         status: false,
         errors,
@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
       }
     );
 
-    if (result.nModified == 0) {
+    if (result.nModified === 0) {
       return res.json({
         status: false,
         errors: ["لم تقم بإجراء أي تغيير"],

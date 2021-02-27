@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
       });
     }
 
-    if (req.body._id && req.user.role == "admin") {
+    if (req.body._id && req.user.role === "admin") {
       let orderSearch = await OrderModel.findOne({ _id: req.body._id });
 
       if (!orderSearch) {
@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
       }
 
       orders = [...orders, orderSearch.toObject()];
-    } else if (req.body._id && req.user.role != "admin") {
+    } else if (req.body._id && req.user.role !== "admin") {
       let orderSearch = await OrderModel.findOne({
         _id: req.body._id,
         userId: req.user._id,
@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
       orders = [...orders, orderSearch.toObject()];
     } else {
       //Check for permissions
-      if (req.user.role != "admin") {
+      if (req.user.role !== "admin") {
         return res.json({
           status: false,
           errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
 
       let ordersSearch = await OrderModel.find({});
 
-      if (ordersSearch.length == 0) {
+      if (ordersSearch.length === 0) {
         return res.json({
           status: false,
           errors: ["لا يوجد طلبات لعرضها"],

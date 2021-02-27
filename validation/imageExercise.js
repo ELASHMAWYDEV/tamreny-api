@@ -5,14 +5,14 @@ module.exports = async ({ categoryId, title, description, files }) => {
     let errors = [];
 
     //Required
-    if (!(files && files.images.length != 0))
+    if (!(files && files.images.length !== 0))
       errors.push("يجب رفع صورة واحدة علي الأقل ");
     if (!categoryId) errors.push("يجب تحديد القسم");
     if (!title) errors.push("يجب وضع عنوان للتمرين");
     if (!description) errors.push("يجب كتابة وصف للتمرين");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,
@@ -50,7 +50,7 @@ module.exports = async ({ categoryId, title, description, files }) => {
     }
 
     //Send any errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,

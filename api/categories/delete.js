@@ -6,7 +6,7 @@ const VideoCategoryModel = require("../../models/VideoExercisesCategory");
 router.post("/", async (req, res) => {
   try {
     //Check for permissions
-    if (!(req.user && req.user.role == "admin")) {
+    if (!(req.user && req.user.role === "admin")) {
       return res.json({
         status: false,
         errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],
@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     let type = +req.body.type;
 
     //Validation
-    if (req.body._id == undefined) {
+    if (req.body._id === undefined) {
       return res.json({
         status: false,
         errors: ["يجب تحديد القسم لحذفه"],
@@ -31,13 +31,13 @@ router.post("/", async (req, res) => {
     }
 
     let result =
-      type == 1
+      type === 1
         ? await ImageCategoryModel.deleteOne({ _id: req.body._id })
-        : type == 2
+        : type === 2
         ? await VideoCategoryModel.deleteOne({ _id: req.body._id })
         : null;
 
-    if (result.ok == 0 || result.deleteCount == 0) {
+    if (result.ok === 0 || result.deleteCount === 0) {
       return res.json({
         status: false,
         errors: ["حدث خطأ ما ، قد يكون هذا القسم غير مسجل في قاعدة البيانات"],

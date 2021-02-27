@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
 
     /********************************************************/
     //Check if image is not changed
-    if (paymentImage.name != orderSearch.paymentImage) {
+    if (paymentImage.name !== orderSearch.paymentImage) {
       //Save the new image
       const paymentImageUniqueName = `${uuidv4()}.${paymentImage.name
         .split(".")
@@ -93,7 +93,7 @@ router.post("/", async (req, res) => {
         }
       );
 
-      if (result.nModified == 0) {
+      if (result.nModified === 0) {
         return res.json({
           status: false,
           errors: ["لم تقم بإجراء أي تغيير"],
@@ -111,7 +111,7 @@ router.post("/", async (req, res) => {
         }
       );
 
-      if (result.nModified == 0) {
+      if (result.nModified === 0) {
         return res.json({
           status: false,
           errors: ["لم تقم بإجراء أي تغيير"],

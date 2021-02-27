@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
     } else {
       let proteinsSearch = await ProteinModel.find({});
 
-      if (proteinsSearch.length == 0) {
+      if (proteinsSearch.length === 0) {
         return res.json({
           status: false,
           errors: ["لا يوجد مكملات غذائية لعرضها"],

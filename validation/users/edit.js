@@ -10,6 +10,7 @@ module.exports = async ({
   password,
   passwordConfirm,
   phoneNumber,
+  role,
 }) => {
   try {
     let errors = [];
@@ -20,13 +21,14 @@ module.exports = async ({
     if (!username) errors.push("يجب كتابة اسم المستخدم");
     if (!email) errors.push("يجب كتابة البريد الالكتروني");
     if (!phoneNumber) errors.push("يجب كتابة رقم الهاتف");
+    if (!role) errors.push("يجب تحديد مستوي المستخدم");
 
     //Check if user exist on DB
     if (!(await UserModel.findOne({ _id })))
       errors.push("هذا المستخدم غير مسجل بقاعدة البيانات");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,
@@ -42,7 +44,7 @@ module.exports = async ({
 
     //Password
     if (password || passwordConfirm) {
-      if (password != passwordConfirm)
+      if (password !== passwordConfirm)
         errors.push("يجب أن تكون كلمة المرور وتأكيد كلمة المرور متطابقان");
       if (password.length < 6)
         errors.push("يجب أن تحتوي كلمة المرور علي 6 أحرف علي الأقل");
@@ -52,12 +54,13 @@ module.exports = async ({
     if (!emailValidator.validate(email))
       errors.push("هذا البريد الالكتروني غير صالح");
 
-    if (errors.length == 0) {
+    if (errors.length === 0) {
       const user = {
         name,
         username,
         email,
         phoneNumber,
+        role,
       };
 
       //hash password

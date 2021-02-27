@@ -18,8 +18,10 @@ router.post("/", async (req, res) => {
     //Send the jwt token with the success response
     const accessToken = await createToken({ _id: validateUser.user._id });
 
-    res.cookie("access_token", accessToken);
-    res.cookie("user_data", JSON.stringify(validateUser.user));
+    res.cookie("access_token", accessToken, { maxAge: 86400 * 1000 });
+    res.cookie("user_data", JSON.stringify(validateUser.user), {
+      maxAge: 86400 * 1000,
+    });
     return res.json({
       status: true,
       messages: ["تم تسجيل الدخول بنجاح"],

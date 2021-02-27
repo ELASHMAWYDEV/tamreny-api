@@ -27,9 +27,9 @@ router.post("/", async (req, res) => {
 
     //Check if name exist
     let categorySearch =
-      type == 1
+      type === 1
         ? await ImageCategoryModel.findOne({ name })
-        : type == 2
+        : type === 2
         ? await VideoCategoryModel.findOne({ name })
         : null;
 
@@ -47,9 +47,9 @@ router.post("/", async (req, res) => {
     );
 
     let categorySave =
-      type == 1
+      type === 1
         ? await ImageCategoryModel.create({ name, image: imageUniqueName })
-        : type == 2
+        : type === 2
         ? await VideoCategoryModel.create({ name, image: imageUniqueName })
         : null;
 

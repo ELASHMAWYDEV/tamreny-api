@@ -18,32 +18,32 @@ $dark-blue: #0984e3;
 
 //Media Queries
 @mixin media($breakpoint) {
-  @if $breakpoint == phone-sm {
+  @if $breakpoint  ==  phone-sm {
     @media only screen and (max-width: 360px) {
       @content;
     }
   }
-  @if $breakpoint == phone-lg {
+  @if $breakpoint  ==  phone-lg {
     @media only screen and (max-width: 480px) {
       @content;
     }
   }
-  @if $breakpoint == tablet-sm {
+  @if $breakpoint  ==  tablet-sm {
     @media only screen and (max-width: 768px) {
       @content;
     }
   }
-  @if $breakpoint == tablet-lg {
+  @if $breakpoint  ==  tablet-lg {
     @media only screen and (max-width: 1024px) {
       @content;
     }
   }
-  @if $breakpoint == desktop-sm {
+  @if $breakpoint  ==  desktop-sm {
     @media only screen and (max-width: 1200px) {
       @content;
     }
   }
-  @if $breakpoint == desktop-lg {
+  @if $breakpoint  ==  desktop-lg {
     @media only screen and (max-width: 1920px) {
       @content;
     }
@@ -169,14 +169,18 @@ $dark-blue: #0984e3;
 
 //Floating boxs container
 .float-box-container {
-  position: absolute;
+  position: fixed;
+  overflow-y: auto;
   top: 0;
   left: 0;
   right: 0;
-  max-width: 95%;
-  margin: 30px auto;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 18;
   @include flex;
+  & > div {
+    margin: 50px auto;
+  }
 }
 /*****************************/
 
@@ -343,12 +347,14 @@ $dark-blue: #0984e3;
   padding: 6px 10px;
   border-radius: 8px;
   background-color: $light-gray;
-  color: $dark-gray;
   border: 1.5px solid transparent;
   outline: none;
   font-weight: 500;
   font-size: 14px;
   width: 180px;
+  &::placeholder {
+    color: $dark-gray;
+  }
   @include trans;
   &:focus {
     border: 1.5px solid #0984e3;
@@ -707,5 +713,15 @@ footer {
       opacity: 0;
       transform: translateY(-40px);
     }
+  }
+}
+
+/*****************************************************/
+.add-new {
+  @include flex;
+  margin: 30px auto;
+  .btn-add-new {
+    @include btn-adv($light-purple, $dark-purple);
+    font-size: 18px;
   }
 }

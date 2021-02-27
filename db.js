@@ -3,9 +3,9 @@ const { MONGO_URI_DEVELOPMENT, MONGO_URI_PRODUCTION } = require("./config");
 
 //Connect to mongodb
 const URI =
-  process.env.NODE_ENV == "development"
+  process.env.NODE_ENV === "development"
     ? MONGO_URI_DEVELOPMENT
-    : process.env.NODE_ENV == "production" && MONGO_URI_PRODUCTION;
+    : process.env.NODE_ENV === "production" && MONGO_URI_PRODUCTION;
 
 mongoose.connect(URI, {
   useNewUrlParser: true,

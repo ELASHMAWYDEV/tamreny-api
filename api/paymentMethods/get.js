@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
     } else {
       let paymentMethodsSearch = await PaymentMethodModel.find({});
 
-      if (paymentMethodsSearch.length == 0) {
+      if (paymentMethodsSearch.length === 0) {
         return res.json({
           status: false,
           errors: ["لا يوجد وسائل دفع لعرضها"],

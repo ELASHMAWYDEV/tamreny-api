@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
     } else {
       let hallsSearch = await HallModel.find({});
 
-      if (hallsSearch.length == 0) {
+      if (hallsSearch.length === 0) {
         return res.json({
           status: false,
           errors: ["لا يوجد قاعات"],

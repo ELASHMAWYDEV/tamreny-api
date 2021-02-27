@@ -17,9 +17,9 @@ router.post("/", async (req, res) => {
 
     if (req.body._id) {
       let categorySearch =
-        type == 1
+        type === 1
           ? await ImageCategoryModel.findOne({ _id: req.body._id })
-          : type == 2
+          : type === 2
           ? await VideoCategoryModel.findOne({ _id: req.body._id })
           : null;
 
@@ -33,13 +33,13 @@ router.post("/", async (req, res) => {
       categories = [...categories, categorySearch.toObject()];
     } else {
       let categorySearch =
-        type == 1
+        type === 1
           ? await ImageCategoryModel.find({})
-          : type == 2
+          : type === 2
           ? await VideoCategoryModel.find({})
           : [];
 
-      if (categorySearch.length == 0) {
+      if (categorySearch.length === 0) {
         return res.json({
           status: false,
           errors: ["لا يوجد أقسام حاليا"],

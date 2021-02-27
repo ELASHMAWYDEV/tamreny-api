@@ -9,7 +9,7 @@ module.exports = async ({ title, description, price, coachBrief, files }) => {
     if (!price) errors.push("يجب تحديد سعر المنتج");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,
@@ -26,7 +26,7 @@ module.exports = async ({ title, description, price, coachBrief, files }) => {
       errors.push("يجب أن يكون امتداد الصورة png أو jpeg أو jpg فقط");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,

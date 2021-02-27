@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
     let errors = [];
 
     //Check for permissions
-    if (!(req.user && req.user.role == "admin")) {
+    if (!(req.user && req.user.role === "admin")) {
       return res.json({
         status: false,
         errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],
@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
     if (!paymentMethod.description)
       errors.push("يجب كتابة خطوات وتفاصيل طريقة الدفع لكي يراها العميل");
 
-    if (errors.length != 0) {
+    if (errors.length !== 0) {
       return res.json({
         status: false,
         errors,

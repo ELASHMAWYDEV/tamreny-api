@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Table, DataBox, SearchBox, DeleteBox } from "../../components";
 
 //Hooks
@@ -77,11 +77,7 @@ const Users = () => {
         options={{
           title: "اضافة مستخدم جديد",
           onSave: async () => {
-            const user = await addUser(userObj);
-            if (user) {
-              setUsers([...users, user]);
-              setAddBoxVisible(false);
-            }
+            if (await addUser(userObj)) setAddBoxVisible(false);
           },
           btnSave: "اضافة",
         }}
@@ -173,9 +169,9 @@ const Users = () => {
         options={{
           title: `تعديل المستخدم رقم ${userObj._id}`,
           onSave: async () => {
-            const user = await editUser(userObj);
-            if (user) {
-              setUsers(users.map((u) => (u._id === user._id ? user : u)));
+            const result = await editUser(userObj);
+            if (result) {
+              setUsers(users.map((u) => (u._id === result._id ? result : u)));
               setEditBoxVisible(false);
             }
           },

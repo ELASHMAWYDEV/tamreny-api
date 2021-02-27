@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
         //Check if images are not changed
         let imagesToSave = [];
         for (let image of validateExercise.images) {
-          if (exerciseSearch.images.indexOf(image.name) == -1) {
+          if (exerciseSearch.images.indexOf(image.name) === -1) {
             //Save the new image
             const imageUniqueName = `${uuidv4()}.${image.name
               .split(".")
@@ -108,7 +108,7 @@ router.post("/", async (req, res) => {
           }
         );
 
-        if (result.nModified == 0) {
+        if (result.nModified === 0) {
           return res.json({
             status: false,
             errors: ["لم تقم بإجراء أي تغيير"],
@@ -172,7 +172,7 @@ router.post("/", async (req, res) => {
           }
         );
 
-        if (result.nModified == 0) {
+        if (result.nModified === 0) {
           return res.json({
             status: false,
             errors: ["لم تقم بإجراء أي تغيير"],

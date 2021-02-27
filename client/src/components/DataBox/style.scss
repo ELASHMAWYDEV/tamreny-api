@@ -1,0 +1,15 @@
+@import "../../assets/style/global";;
+
+.data-box {
+  @include box;
+  @include box-animate;
+
+  h3 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .save-btn {
+    @include btn-adv($light-green, $dark-green);
+    font-size: 16px;
+  }
+}

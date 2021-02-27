@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
     let hall = req.body;
 
     //Check for permissions
-    if (!(req.user && req.user.role == "admin")) {
+    if (!(req.user && req.user.role === "admin")) {
       return res.json({
         status: false,
         errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],

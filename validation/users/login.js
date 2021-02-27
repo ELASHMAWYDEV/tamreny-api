@@ -10,7 +10,7 @@ module.exports = async ({ user, password }) => {
     if (!password) errors.push("يجب كتابة كلمة المرور");
 
     //Send if any is empty
-    if (errors.length != 0) {
+    if (errors.length !== 0) {
       return {
         status: false,
         errors,
@@ -29,7 +29,7 @@ module.exports = async ({ user, password }) => {
       );
     }
 
-    if (errors.length != 0) {
+    if (errors.length !== 0) {
       return {
         status: false,
         errors,
@@ -41,7 +41,7 @@ module.exports = async ({ user, password }) => {
       errors.push("كلمة المرور التي أدخلتها غير صحيحة");
     }
 
-    if (errors.length != 0) {
+    if (errors.length !== 0) {
       return {
         status: false,
         errors,

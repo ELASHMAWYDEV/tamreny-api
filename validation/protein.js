@@ -8,7 +8,7 @@ module.exports = async ({ name, description, files }) => {
     if (!description) errors.push("يجب كتابة محتوي المقال");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,
@@ -25,7 +25,7 @@ module.exports = async ({ name, description, files }) => {
       errors.push("يجب أن يكون امتداد الصورة png أو jpeg أو jpg فقط");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,

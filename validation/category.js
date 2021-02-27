@@ -8,7 +8,7 @@ module.exports = async ({ name, files }) => {
     if (!name) errors.push("يجب وضع اسم للقسم");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,
@@ -22,7 +22,7 @@ module.exports = async ({ name, files }) => {
       errors.push("يجب أن يكون امتداد الصورة png فقط");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,

@@ -41,9 +41,9 @@ router.post("/", async (req, res) => {
     /********************************************************/
     //Check if category exist on DB
     let categorySearch =
-      type == 1
+      type === 1
         ? await ImageCategoryModel.findOne({ _id: category._id })
-        : type == 2
+        : type === 2
         ? await VideoCategoryModel.findOne({ _id: category._id })
         : null;
 
@@ -61,9 +61,9 @@ router.post("/", async (req, res) => {
     /********************************************************/
     //Check if name exist before
     let nameSearch =
-      type == 1
+      type === 1
         ? await ImageCategoryModel.findOne({ name, _id: { $ne: category._id } })
-        : type == 2
+        : type === 2
         ? await VideoCategoryModel.findOne({ name, _id: { $ne: category._id } })
         : null;
 
@@ -76,7 +76,7 @@ router.post("/", async (req, res) => {
 
     /********************************************************/
     //Check if image is not changed
-    if (image.name != categorySearch.image) {
+    if (image.name !== categorySearch.image) {
       //Save the new image
       const imageUniqueName = `${uuidv4()}.${image.name.split(".").pop()}`;
       await image.mv(
@@ -116,7 +116,7 @@ router.post("/", async (req, res) => {
       /********************************************************/
       //Edit the category on DB
       const result =
-        type == 1
+        type === 1
           ? await ImageCategoryModel.updateOne(
               { _id: category._id },
               {
@@ -124,7 +124,7 @@ router.post("/", async (req, res) => {
                 image: imageUniqueName,
               }
             )
-          : type == 2
+          : type === 2
           ? await VideoCategoryModel.updateOne(
               { _id: category._id },
               {
@@ -134,7 +134,7 @@ router.post("/", async (req, res) => {
             )
           : null;
 
-      if (result.nModified == 0) {
+      if (result.nModified === 0) {
         return res.json({
           status: false,
           errors: ["لم تقم بإجراء أي تغيير"],
@@ -143,14 +143,14 @@ router.post("/", async (req, res) => {
     } else {
       //Edit the category on DB
       const result =
-        type == 1
+        type === 1
           ? await ImageCategoryModel.updateOne(
               { _id: category._id },
               {
                 name,
               }
             )
-          : type == 2
+          : type === 2
           ? await VideoCategoryModel.updateOne(
               { _id: category._id },
               {
@@ -159,7 +159,7 @@ router.post("/", async (req, res) => {
             )
           : null;
 
-      if (result.nModified == 0) {
+      if (result.nModified === 0) {
         return res.json({
           status: false,
           errors: ["لم تقم بإجراء أي تغيير"],
@@ -170,9 +170,9 @@ router.post("/", async (req, res) => {
     /********************************************************/
     //Get the new category
     categorySearch =
-      type == 1
+      type === 1
         ? await ImageCategoryModel.findOne({ _id: category._id })
-        : type == 2
+        : type === 2
         ? await VideoCategoryModel.findOne({ _id: category._id })
         : null;
 

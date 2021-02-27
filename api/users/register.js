@@ -17,7 +17,10 @@ router.post("/", async (req, res) => {
     /********************************************************/
 
     //Save the user to DB
-    const saveUser = await UserModel.create(validateUser.user);
+    const saveUser = await UserModel.create({
+      ...validateUser.user,
+      role: req.user && req.user.role === "admin" ? validateUser.role : "user",
+    });
     if (!saveUser) {
       return res.json({
         status: false,
@@ -30,12 +33,14 @@ router.post("/", async (req, res) => {
     //Send the jwt token with the success response
     const accessToken = await createToken({ _id: saveUser._id });
 
-    res.cookie("access_token", accessToken);
+    if (!(req.user && req.user.role === "admin")) {
+      res.cookie("access_token", accessToken);
+    }
     return res.json({
       status: true,
       messages: ["تم التسجيل بنجاح"],
       accessToken,
-      user: validateUser.user,
+      user: saveUser,
     });
 
     /********************************************************/

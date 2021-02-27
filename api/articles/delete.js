@@ -6,7 +6,7 @@ const ArticleModel = require("../../models/Article");
 router.post("/", async (req, res) => {
   try {
     //Check for permissions
-    if (!(req.user && req.user.role == "admin")) {
+    if (!(req.user && req.user.role === "admin")) {
       return res.json({
         status: false,
         errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],
@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
 
     let result = await ArticleModel.deleteOne({ _id: req.body._id });
 
-    if (result.deleteCount == 0)
+    if (result.deleteCount === 0)
       return res.json({
         status: false,
         errors: ["حدث خطأ ما أثناء حذف المقالة"],

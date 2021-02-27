@@ -10,18 +10,18 @@ module.exports = async ({
     let errors = [];
 
     //Required
-    if (!(files && files.images.length == 0))
+    if (!(files && files.images.length === 0))
       errors.push("يجب رفع صورة واحدة علي الأقل");
     if (!name) errors.push("يجب كتابة اسم القاعة");
     if (!city) errors.push("يجب كتابة اسم المدينة الموجودة بها القاعة");
     if (!brief) errors.push("يجب كتابة نبذة عن القاعة");
-    if (subscriptions && subscriptions.length == 0)
+    if (subscriptions && subscriptions.length === 0)
       errors.push("يجب كتابة أنواع الاشتراكات");
     if (location && !location.lat && !location.lng)
       errors.push("يجب تحديد مكان القاعة علي الخريطة");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,
@@ -43,7 +43,7 @@ module.exports = async ({
     }
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,

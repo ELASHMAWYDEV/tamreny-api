@@ -5,7 +5,7 @@ const UserModel = require("../../models/User");
 router.post("/", async (req, res) => {
   try {
     //Check for permissions
-    if (!(req.user && req.user.role == "admin")) {
+    if (!(req.user && req.user.role === "admin")) {
       return res.json({
         status: false,
         errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],
@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
       });
 
     //if user is trying to remove him self
-    if (req.body._id == req.user._id)
+    if (req.body._id === req.user._id)
       return res.json({
         status: false,
         errors: ["هل أنت مجنون ، لا يمكنك حذف نفسك !"],
@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
 
     let result = await UserModel.deleteOne({ _id: req.body._id });
 
-    if (result.deleteCount == 0)
+    if (result.deleteCount === 0)
       return res.json({
         status: false,
         errors: ["حدث خطأ ما أثناء حذف المستخدم"],

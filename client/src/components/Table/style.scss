@@ -1,0 +1,15 @@
+@import "../../assets/style/global";
+
+
+.table-container {
+  @include table-container;
+  .btn-edit {
+      @include btn-adv($light-green,$dark-green);
+      padding: 2px 10px;
+      font-size: 12px;
+  }
+  .whatsapp-btn {
+      width: 25px;
+      margin-left: 15px
+  }
+}

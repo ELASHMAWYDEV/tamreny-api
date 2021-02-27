@@ -8,7 +8,7 @@ const VideoExerciseModel = require("../../models/VideoExercise");
 router.post("/", async (req, res) => {
   try {
     //Check for permissions
-    if (!(req.user && req.user.role == "admin")) {
+    if (!(req.user && req.user.role === "admin")) {
       return res.json({
         status: false,
         errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],
@@ -34,11 +34,11 @@ router.post("/", async (req, res) => {
 
     //Check if article exist or not
     let exerciseSearch =
-      type == 1
+      type === 1
         ? await ImageExerciseModel.findOne({
             _id,
           })
-        : type == 2
+        : type === 2
         ? await VideoExerciseModel.findOne({
             _id,
           })
@@ -51,13 +51,13 @@ router.post("/", async (req, res) => {
       });
 
     let result =
-      type == 1
+      type === 1
         ? await ImageExerciseModel.deleteOne({ _id })
-        : type == 2
+        : type === 2
         ? await VideoExerciseModel.deleteOne({ _id })
         : null;
 
-    if (result.deleteCount == 0)
+    if (result.deleteCount === 0)
       return res.json({
         status: false,
         errors: ["حدث خطأ ما أثناء حذف التمرين"],

@@ -6,7 +6,7 @@ router.post("/", async (req, res) => {
   try {
 
     //Check for permissions
-    if (!(req.user && req.user.role == "admin")) {
+    if (!(req.user && req.user.role === "admin")) {
       return res.json({
         status: false,
         errors: ["ليس لديك صلاحية الوصول الي هذه البيانات"],
@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
     } else {
       let usersSearch = await UserModel.find({});
 
-      if (usersSearch.length == 0) {
+      if (usersSearch.length === 0) {
         return res.json({
           status: false,
           errors: ["لا يوجد مستخدمين مسجلين"],

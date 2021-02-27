@@ -20,7 +20,7 @@ module.exports = async ({
     if (!paymentMethodId) errors.push("يجب تحديد وسيلة الدفع");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,
@@ -52,7 +52,7 @@ module.exports = async ({
       errors.push("يبدو أن وسيلة الدفع التي اخترتها غير مسجلة لدينا");
 
     //Send any empty errors
-    if (errors.length != 0)
+    if (errors.length !== 0)
       return {
         status: false,
         errors,

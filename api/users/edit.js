@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
     const user = req.body;
 
     //Check if the user has permissions
-    if (!(req.user && (req.user._id == user._id || req.user.role == "admin"))) {
+    if (!(req.user && (req.user._id === user._id || req.user.role === "admin"))) {
       return res.json({
         status: false,
         errors: ["ليس لديك صلاحية تعديل هذا الحساب"],
@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
       }
     );
 
-    if (result.nModified == 0) {
+    if (result.nModified === 0) {
       return res.json({
         status: false,
         errors: ["لم تقم بتغيير أي شئ !"],
