@@ -11,7 +11,11 @@ router.post("/", async (req, res) => {
     const article = req.body;
 
     //Validation
-    const validateArticle = await validation({ ...article, files: req.files });
+    const validateArticle = await validation({
+      ...article,
+      files: req.files,
+      edit: true,
+    });
     if (!validateArticle.status) {
       return res.json(validateArticle);
     }
@@ -120,11 +124,16 @@ router.post("/", async (req, res) => {
     articleSearch = await ArticleModel.findOne({ _id: article._id });
 
     /********************************************************/
+
+    articleSearch = articleSearch.toObject();
     //Send the success response
     return res.json({
       status: true,
       messages: ["تم تعديل المقال بنجاح"],
-      article: articleSearch,
+      article: {
+        ...articleSearch,
+        mainImage: `${req.protocol}://${req.headers.host}/images/articles/${articleSearch.mainImage}`,
+      },
     });
 
     /********************************************************/

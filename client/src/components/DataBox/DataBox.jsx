@@ -26,7 +26,11 @@ const DataBox = ({ options, inputs, visible, setVisible }) => {
             <span></span>
             <span></span>
           </div>
-          <form method="POST" onSubmit={(e) => e.preventDefault()}>
+          <form
+            method="POST"
+            onSubmit={(e) => e.preventDefault()}
+            ref={options.formRef}
+          >
             {options.title && <h3>{options.title}</h3>}
             <div className="input-items">
               {inputs.length !== 0 &&
@@ -34,6 +38,7 @@ const DataBox = ({ options, inputs, visible, setVisible }) => {
                   input.tag === "input" ? (
                     <div className="input-item">
                       {input.label && <label>{input.label}</label>}
+
                       <input {...input.props} />
                     </div>
                   ) : input.tag === "select" ? (
@@ -45,6 +50,18 @@ const DataBox = ({ options, inputs, visible, setVisible }) => {
                       </select>
                       <span></span>
                     </div>
+                  ) : input.tag === "textarea" ? (
+                    <div
+                      className="input-item"
+                      style={{ alignItems: "flex-start" }}
+                    >
+                      {input.label && <label>{input.label}</label>}
+
+                      <textarea
+                        {...input.props}
+                        style={{ height: 250, minWidth: "auto" }}
+                      ></textarea>
+                    </div>
                   ) : null
                 )}
               <div className="input-item">
@@ -53,7 +70,7 @@ const DataBox = ({ options, inputs, visible, setVisible }) => {
                   type="submit"
                   onClick={options.onSave}
                 >
-                  {options.saveBtn || "حفظ"}
+                  {options.btnSave || "حفظ"}
                 </button>
               </div>
             </div>

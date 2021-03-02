@@ -37,7 +37,6 @@ const Header = () => {
   const settingsBoxRef = useRef(null);
 
   useEffect(() => {
-    console.log(Cookies.getJSON("user_data"));
     window.addEventListener("mouseup", containerHandler);
 
     return () => {

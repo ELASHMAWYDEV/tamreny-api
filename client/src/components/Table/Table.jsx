@@ -25,7 +25,13 @@ const Table = ({ headers, data, actions }) => {
               data.map((inputs, i) => (
                 <tr key={i}>
                   {inputs.map((input) => (
-                    <td>{input}</td>
+                    <td>
+                      {input && input.type == "img" ? (
+                        <img src={input.src} className="main-img" />
+                      ) : (
+                        input
+                      )}
+                    </td>
                   ))}
                   {actions && (
                     <td className="action">

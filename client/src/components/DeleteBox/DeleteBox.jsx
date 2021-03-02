@@ -22,7 +22,7 @@ const DeleteBox = ({ visible, setVisible, title, onDelete }) => {
     visible && (
       <div className="float-box-container">
         <div className="delete-box" ref={deleteBoxRef}>
-          <div className="closing" onClick={() => "closeBox(this)"}>
+          <div className="closing" onClick={() => setVisible(false)}>
             <span></span>
             <span></span>
           </div>

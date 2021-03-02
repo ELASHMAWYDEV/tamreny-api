@@ -10,7 +10,7 @@ import { useAuthContext, useNotifierContext } from "./providers";
 import "./style.scss";
 
 //Screens
-import { Login, Stats, Users } from "./screens";
+import { Login, Stats, Users, Articles } from "./screens";
 
 //Components
 import { Notifier, Header } from "./components";
@@ -29,7 +29,7 @@ const App = () => {
             <Switch>
               <Route path="/admin/stats" component={Stats} />
               <Route path="/admin/users" component={Users} />
-              <Route path="/admin/articles" component={Stats} />
+              <Route path="/admin/articles" component={Articles} />
               <Route path="/admin/image-exercises" component={Stats} />
               <Route path="/admin/video-exercises" component={Stats} />
               <Redirect to="/admin/stats" />

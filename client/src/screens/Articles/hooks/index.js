@@ -1,16 +1,19 @@
 import axios from "axios";
 import { useNotifierContext } from "../../../providers";
 
-const useUsersHook = () => {
+const useArticlesHook = () => {
   const { setNotifiers } = useNotifierContext();
 
-  const getUsers = async () => {
+  const getArticles = async () => {
     try {
-      let response = await axios.post("/api/users/get");
+      let response = await axios.post("/api/articles/get");
       let data = await response.data;
 
-      if (!data.status) return setNotifiers({ errors: data.errors });
-      return data.users;
+      if (!data.status) {
+        setNotifiers({ errors: data.errors });
+        return false;
+      }
+      return data.articles;
     } catch (e) {
       alert(e.message);
     }
@@ -18,9 +21,9 @@ const useUsersHook = () => {
 
   /******************************************************/
 
-  const deleteUser = async (_id) => {
+  const deleteArticle = async (_id) => {
     try {
-      let response = await axios.post("/api/users/delete", { _id });
+      let response = await axios.post("/api/articles/delete", { _id });
       let data = await response.data;
 
       if (!data.status) {
@@ -36,9 +39,11 @@ const useUsersHook = () => {
 
   /******************************************************/
 
-  const addUser = async (user = {}) => {
+  const addArticle = async (formRef) => {
     try {
-      let response = await axios.post("/api/users/register", user);
+      let articleData = new FormData(formRef.current);
+
+      let response = await axios.post("/api/articles/add", articleData);
       let data = await response.data;
 
       if (!data.status) {
@@ -46,35 +51,39 @@ const useUsersHook = () => {
         return false;
       }
       setNotifiers({ success: data.messages });
-      return data.user;
+      return data.article;
     } catch (e) {
       alert(e.message);
     }
   };
   /******************************************************/
 
-  const editUser = async (user = {}) => {
+  const editArticle = async (formRef) => {
     try {
-      let response = await axios.post("/api/users/edit", user);
+
+      let articleData = new FormData(formRef.current);
+
+      let response = await axios.post("/api/articles/edit", articleData);
       let data = await response.data;
 
+      console.log(data);
       if (!data.status) {
         setNotifiers({ errors: data.errors });
         return false;
       }
       setNotifiers({ success: data.messages });
-      return data.user;
+      return data.article;
     } catch (e) {
       alert(e.message);
     }
   };
 
   return {
-    getUsers,
-    deleteUser,
-    addUser,
-    editUser,
+    getArticles,
+    deleteArticle,
+    addArticle,
+    editArticle,
   };
 };
 
-export default useUsersHook;
+export default useArticlesHook;

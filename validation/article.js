@@ -1,4 +1,4 @@
-module.exports = async ({ title, content, files }) => {
+module.exports = async ({ title, content, files, edit = false }) => {
   try {
     let errors = [];
 

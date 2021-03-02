@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
     /********************************************************/
 
     //Save the article to DB
-    const saveArticle = await ArticleModel.create({
+    let saveArticle = await ArticleModel.create({
       title,
       content,
       mainImage: mainImageUniqueName,
@@ -60,11 +60,15 @@ router.post("/", async (req, res) => {
 
     /********************************************************/
 
+    saveArticle = saveArticle.toObject();
     //Send the success response
     return res.json({
       status: true,
       messages: ["تم اضافة المقال بنجاح"],
-      article: saveArticle,
+      article: {
+        ...saveArticle,
+        mainImage: `${req.protocol}://${req.headers.host}/images/articles/${saveArticle.mainImage}`,
+      },
     });
 
     /********************************************************/
