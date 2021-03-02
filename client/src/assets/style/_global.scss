@@ -501,6 +501,24 @@ $dark-blue: #0984e3;
         transform: none;
       }
     }
+    &.slider-img {
+      border-radius: 8px;
+      width: 150px;
+      height: 90px;
+      object-fit: cover;
+      cursor: auto;
+      &:active {
+        transform: none;
+      }
+    }
+  }
+
+  .swiper-container {
+    margin: 0;
+    width: 160px;
+    td:has(.swiper-container) {
+      text-overflow: none;
+    }
   }
 
   button {

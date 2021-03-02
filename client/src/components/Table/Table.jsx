@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Pagination, A11y } from "swiper";
 
 //Style
 import "./style.scss";
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
+import "swiper/components/scrollbar/scrollbar.scss";
 
 //Assets
 //@ts-ignore
 import TrashIcon from "../../assets/img/trash.svg";
+
+SwiperCore.use([Pagination, A11y]);
 
 const Table = ({ headers, data, actions }) => {
   return (
@@ -28,6 +36,18 @@ const Table = ({ headers, data, actions }) => {
                     <td>
                       {input && input.type == "img" ? (
                         <img src={input.src} className="main-img" />
+                      ) : input && input.type == "slider" ? (
+                        <Swiper
+                          spaceBetween={0}
+                          slidesPerView={1}
+                          pagination={{ clickable: true }}
+                        >
+                          {input.images.map((img) => (
+                            <SwiperSlide style={{ width: 160 }}>
+                              <img src={img} className="slider-img" />
+                            </SwiperSlide>
+                          ))}
+                        </Swiper>
                       ) : (
                         input
                       )}
