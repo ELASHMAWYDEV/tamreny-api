@@ -132,6 +132,17 @@ $dark-blue: #0984e3;
       margin: 12px auto;
       width: 100%;
       @include flex;
+      .swiper-container {
+        margin: 0;
+        width: 160px;
+        .slider-img {
+          border-radius: 8px;
+          width: 150px;
+          height: 90px;
+          object-fit: cover;
+          cursor: auto;
+        }
+      }
     }
     .select-item {
       width: 70%;
@@ -152,6 +163,7 @@ $dark-blue: #0984e3;
     margin: 15px auto;
     border-radius: 5px;
   }
+
   @include media(phone-lg) {
     width: 98%;
     .input-item {

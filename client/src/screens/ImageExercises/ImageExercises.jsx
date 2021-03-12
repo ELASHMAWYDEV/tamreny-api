@@ -132,8 +132,9 @@ const ImageExercises = () => {
             props: {
               type: "file",
               accept: ".jpg, .png, .jpeg",
-              name: "mainImage",
+              name: "images",
               placeholder: "الصور",
+              multiple: true,
               required: true,
 
               onChange: (e) =>
@@ -149,7 +150,7 @@ const ImageExercises = () => {
         visible={editBoxVisible}
         setVisible={setEditBoxVisible}
         options={{
-          title: `تعديل المستخدم رقم ${imageExerciseObj._id}`,
+          title: `تعديل التمرين رقم ${imageExerciseObj._id}`,
           onSave: async () => {
             const result = await editImageExercise(editFormRef);
             if (result) {
@@ -206,17 +207,17 @@ const ImageExercises = () => {
           },
           {
             tag: "input",
-            label: "الصورة المصغرة",
+            label: "الصور",
             props: {
               type: "file",
               accept: ".jpg, .png, .jpeg",
               multiple: true,
-              placeholder: "الصورة المصغرة",
-              name: "mainImage",
+              placeholder: "الصور",
+              name: "images",
               onChange: (e) =>
                 setImageExerciseObj({
                   ...imageExerciseObj,
-                  mainImage: URL.createObjectURL(e.target.files[0]),
+                  images: e.target.files,
                 }),
             },
           },

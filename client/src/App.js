@@ -10,7 +10,15 @@ import { useAuthContext, useNotifierContext } from "./providers";
 import "./style.scss";
 
 //Screens
-import { Login, Stats, Users, Articles, ImageExercises } from "./screens";
+import {
+  Login,
+  Stats,
+  Users,
+  Articles,
+  ImageExercises,
+  TermsOfServices,
+  PrivacyPolicy,
+} from "./screens";
 
 //Components
 import { Notifier, Header } from "./components";
@@ -38,6 +46,8 @@ const App = () => {
         ) : (
           <Switch>
             <Route path="/login" component={Login} />
+            <Route path="/terms-of-services" component={TermsOfServices} />
+            <Route path="/privacy-policy" component={PrivacyPolicy} />
             <Redirect to="/login" />
           </Switch>
         )}
