@@ -9,6 +9,8 @@ router.post("/", async (req, res) => {
   try {
     let hall = req.body;
 
+    console.log(hall);
+
     //Check for permissions
     if (!(req.user && req.user.role === "admin")) {
       return res.json({
@@ -28,6 +30,7 @@ router.post("/", async (req, res) => {
     let { name, city, brief, subscriptions, location, images } = validateHall;
 
     let imagesToSave = [];
+
     //Save the images
     for (let image of images) {
       const imageUniqueName = `${uuidv4()}.${image.name.split(".").pop()}`;
@@ -46,8 +49,10 @@ router.post("/", async (req, res) => {
       city,
       brief,
       subscriptions,
-      location,
-      images: imagesToSave,
+      location: {
+        coordinates: [location.lng, location.lat],
+      },
+      images: images.length != 0 ? imagesToSave : ["404.png"],
     });
 
     if (!saveHall) {

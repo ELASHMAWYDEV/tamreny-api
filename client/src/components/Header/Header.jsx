@@ -191,6 +191,56 @@ const Header = () => {
             <img src={BossIcon} alt="icon" className="link-icon" />
             <h2>تمارين رياضية (صور)</h2>
           </Link>
+          <Link
+            to="/admin/halls"
+            className={`link ${
+              pathname.startsWith("/admin/halls") ? "active-link" : ""
+            }`}
+            onClick={() => setSidebarActive(false)}
+          >
+            <img src={BossIcon} alt="icon" className="link-icon" />
+            <h2>القاعات</h2>
+          </Link>
+          <Link
+            to="/admin/products"
+            className={`link ${
+              pathname.startsWith("/admin/products") ? "active-link" : ""
+            }`}
+            onClick={() => setSidebarActive(false)}
+          >
+            <img src={BossIcon} alt="icon" className="link-icon" />
+            <h2>المنتجات</h2>
+          </Link>
+          <Link
+            to="/admin/proteins"
+            className={`link ${
+              pathname.startsWith("/admin/proteins") ? "active-link" : ""
+            }`}
+            onClick={() => setSidebarActive(false)}
+          >
+            <img src={BossIcon} alt="icon" className="link-icon" />
+            <h2>البروتينات</h2>
+          </Link>
+          <Link
+            to="/admin/orders"
+            className={`link ${
+              pathname.startsWith("/admin/orders") ? "active-link" : ""
+            }`}
+            onClick={() => setSidebarActive(false)}
+          >
+            <img src={BossIcon} alt="icon" className="link-icon" />
+            <h2>طلبات الشراء</h2>
+          </Link>
+          <Link
+            to="/admin/payment-methods"
+            className={`link ${
+              pathname.startsWith("/admin/payment-methods") ? "active-link" : ""
+            }`}
+            onClick={() => setSidebarActive(false)}
+          >
+            <img src={BossIcon} alt="icon" className="link-icon" />
+            <h2>وسائل الدفع</h2>
+          </Link>
         </div>
       </aside>
 

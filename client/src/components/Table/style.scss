@@ -1,15 +1,22 @@
 @import "../../assets/style/global";
 
-
 .table-container {
   @include table-container;
   .btn-edit {
-      @include btn-adv($light-green,$dark-green);
-      padding: 2px 10px;
-      font-size: 12px;
+    @include btn-adv($light-green, $dark-green);
+    padding: 2px 10px;
+    font-size: 12px;
+  }
+  .maps-btn {
+    @include btn-adv($dark-blue, $light-blue);
+    padding: 2px 10px;
+    font-size: 12px;
+    &:hover {
+      background-color: $black;
+    }
   }
   .whatsapp-btn {
-      width: 25px;
-      margin-left: 15px
+    width: 25px;
+    margin-left: 15px;
   }
 }

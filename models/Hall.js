@@ -26,7 +26,7 @@ const HallSchema = new mongoose.Schema({
   city: String,
   images: [String],
   brief: String,
-  subscribtions: [SubscriptionSchema],
+  subscriptions: [SubscriptionSchema],
   location: {
     type: PointSchema,
     index: "2dsphere",

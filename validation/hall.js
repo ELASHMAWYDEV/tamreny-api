@@ -1,3 +1,5 @@
+require("dotenv/config");
+
 module.exports = async ({
   files,
   name,
@@ -10,14 +12,22 @@ module.exports = async ({
     let errors = [];
 
     //Required
-    if (!(files && files.images.length === 0))
+    if (
+      // process.env.NODE_ENV != "development" &&
+      !(files && files.images.length === 0)
+    )
       errors.push("يجب رفع صورة واحدة علي الأقل");
     if (!name) errors.push("يجب كتابة اسم القاعة");
     if (!city) errors.push("يجب كتابة اسم المدينة الموجودة بها القاعة");
     if (!brief) errors.push("يجب كتابة نبذة عن القاعة");
-    if (subscriptions && subscriptions.length === 0)
+    if (
+      subscriptions &&
+      (subscriptions.length === 0 ||
+        !subscriptions[0].name ||
+        !subscriptions[0].price)
+    )
       errors.push("يجب كتابة أنواع الاشتراكات");
-    if (location && !location.lat && !location.lng)
+    if (!(location && location.lat && location.lng))
       errors.push("يجب تحديد مكان القاعة علي الخريطة");
 
     //Send any empty errors
@@ -28,7 +38,7 @@ module.exports = async ({
       };
 
     //Image validation
-    let images = files.images;
+    let images = (files && files.images) || [];
     //add the extension property to the image
     images = images.map((image) => {
       image.extension = image.name.split(".").pop();

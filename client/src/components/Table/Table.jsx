@@ -48,6 +48,8 @@ const Table = ({ headers, data, actions }) => {
                             </SwiperSlide>
                           ))}
                         </Swiper>
+                      ) : input && input.type == "location" ? (
+                        <button className="maps-btn">عرض الخريطة</button>
                       ) : (
                         input
                       )}

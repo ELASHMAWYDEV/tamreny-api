@@ -16,6 +16,11 @@ import {
   Users,
   Articles,
   ImageExercises,
+  Halls,
+  Products,
+  Orders,
+  Proteins,
+  PaymentMethods,
   TermsOfServices,
   PrivacyPolicy,
 } from "./screens";
@@ -40,6 +45,11 @@ const App = () => {
               <Route path="/admin/articles" component={Articles} />
               <Route path="/admin/image-exercises" component={ImageExercises} />
               <Route path="/admin/video-exercises" component={Stats} />
+              <Route path="/admin/halls" component={Halls} />
+              <Route path="/admin/products" component={Products} />
+              <Route path="/admin/orders" component={Orders} />
+              <Route path="/admin/proteins" component={Proteins} />
+              <Route path="/admin/payment-methods" component={PaymentMethods} />
               <Redirect to="/admin/stats" />
             </Switch>
           </>
