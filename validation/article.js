@@ -3,7 +3,8 @@ module.exports = async ({ title, content, files, edit = false }) => {
     let errors = [];
 
     //Required
-    if (!(files && files.mainImage)) errors.push("يجب رفع صورة للمقال");
+    if (!edit && !(files && files.mainImage))
+      errors.push("يجب رفع صورة للمقال");
     if (!title) errors.push("يجب وضع عنوان للمقال");
     if (!content) errors.push("يجب كتابة محتوي المقال");
 

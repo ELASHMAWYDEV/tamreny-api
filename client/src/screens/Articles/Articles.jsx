@@ -138,7 +138,7 @@ const Articles = () => {
         visible={editBoxVisible}
         setVisible={setEditBoxVisible}
         options={{
-          title: `تعديل المستخدم رقم ${articleObj._id}`,
+          title: `تعديل المقال رقم ${articleObj._id}`,
           onSave: async () => {
             const result = await editArticle(editFormRef);
             if (result) {
@@ -150,6 +150,7 @@ const Articles = () => {
           },
           saveBtn: "تعديل",
           formRef: editFormRef,
+          images: [articleObj.mainImage],
         }}
         inputs={[
           {
@@ -211,7 +212,7 @@ const Articles = () => {
           <h6>المقالات</h6>
         </div>
         <div className="container">
-          <SearchBox />
+          {/*<SearchBox />*/}
           <div className="add-new">
             <button
               className="btn-add-new"

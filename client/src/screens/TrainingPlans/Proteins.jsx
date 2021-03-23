@@ -2,20 +2,25 @@ import { useState, useEffect, useRef } from "react";
 import { Table, DataBox, SearchBox, DeleteBox } from "../../components";
 
 //Hooks
-import useOrdersHook from "./hooks/index";
+import useProteinsHook from "./hooks/index";
 
 //Styles
 import "./style.scss";
 
-const Orders = () => {
-  const { getOrders, deleteOrder, addOrder, editOrder } = useOrdersHook();
+const Proteins = () => {
+  const {
+    getProteins,
+    deleteProtein,
+    addProtein,
+    editProtein,
+  } = useProteinsHook();
 
-  const [orders, setOrders] = useState([]);
+  const [proteins, setProteins] = useState([]);
   const [addBoxVisible, setAddBoxVisible] = useState(false);
   const [editBoxVisible, setEditBoxVisible] = useState(false);
   const [deleteBoxVisible, setDeleteBoxVisible] = useState(false);
 
-  const [orderObj, setOrderObj] = useState({
+  const [proteinObj, setProteinObj] = useState({
     _id: 0,
     title: "",
     content: "",
@@ -28,17 +33,17 @@ const Orders = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await getOrders();
+      const result = await getProteins();
 
       if (result) {
-        setOrders(result);
+        setProteins(result);
       }
     })();
   }, []);
 
   useEffect(() => {
     if (addBoxVisible)
-      setOrderObj({
+      setProteinObj({
         _id: 0,
         title: "",
         content: "",
@@ -48,37 +53,37 @@ const Orders = () => {
   }, [addBoxVisible]);
 
   const onClickEdit = (_id) => {
-    const order = orders.find((u) => u._id === _id);
-    setOrderObj(order);
+    const protein = proteins.find((u) => u._id === _id);
+    setProteinObj(protein);
     setEditBoxVisible(true);
   };
   const onClickDelete = (_id) => {
-    setOrderObj(orders.find((u) => u._id === _id));
+    setProteinObj(proteins.find((u) => u._id === _id));
     setDeleteBoxVisible(true);
   };
 
   return (
     <>
-      {/* <DeleteBox
+      <DeleteBox
         visible={deleteBoxVisible}
         setVisible={setDeleteBoxVisible}
-        title={`حذف المقالة رقم ${orderObj._id}`}
+        title={`حذف المقالة رقم ${proteinObj._id}`}
         onDelete={async () => {
-          if (await deleteOrder(orderObj._id)) {
-            setOrders(orders.filter((u) => u._id !== orderObj._id));
+          if (await deleteProtein(proteinObj._id)) {
+            setProteins(proteins.filter((u) => u._id !== proteinObj._id));
             setDeleteBoxVisible(false);
           }
         }}
-      /> */}
-      {/* <DataBox
+      />
+      <DataBox
         visible={addBoxVisible}
         setVisible={setAddBoxVisible}
         options={{
           title: "اضافة مقال جديد",
           onSave: async () => {
-            const order = await addOrder(addFormRef);
-            if (order) {
-              setOrders([...orders, order]);
+            const protein = await addProtein(addFormRef);
+            if (protein) {
+              setProteins([...proteins, protein]);
               setAddBoxVisible(false);
             }
           },
@@ -97,7 +102,7 @@ const Orders = () => {
               placeholder: "عنوان المقال",
               required: true,
               onChange: (e) =>
-                setOrderObj({ ...orderObj, title: e.target.value }),
+                setProteinObj({ ...proteinObj, title: e.target.value }),
             },
           },
           {
@@ -110,7 +115,7 @@ const Orders = () => {
               required: true,
 
               onChange: (e) =>
-                setOrderObj({ ...orderObj, content: e.target.value }),
+                setProteinObj({ ...proteinObj, content: e.target.value }),
             },
           },
           {
@@ -124,20 +129,22 @@ const Orders = () => {
               required: true,
 
               onChange: (e) =>
-                setOrderObj({ ...orderObj, mainImage: e.target.files[0] }),
+                setProteinObj({ ...proteinObj, mainImage: e.target.files[0] }),
             },
           },
         ]}
-      /> */}
-      {/* <DataBox
+      />
+      <DataBox
         visible={editBoxVisible}
         setVisible={setEditBoxVisible}
         options={{
-          title: `تعديل المستخدم رقم ${orderObj._id}`,
+          title: `تعديل المستخدم رقم ${proteinObj._id}`,
           onSave: async () => {
-            const result = await editOrder(editFormRef);
+            const result = await editProtein(editFormRef);
             if (result) {
-              setOrders(orders.map((u) => (u._id === result._id ? result : u)));
+              setProteins(
+                proteins.map((u) => (u._id === result._id ? result : u))
+              );
               setEditBoxVisible(false);
             }
           },
@@ -149,7 +156,7 @@ const Orders = () => {
             tag: "input",
             props: {
               type: "hidden",
-              value: orderObj._id,
+              value: proteinObj._id,
               name: "_id",
             },
           },
@@ -158,13 +165,13 @@ const Orders = () => {
             label: "عنوان المقال",
             props: {
               type: "text",
-              value: orderObj.title,
+              value: proteinObj.title,
               name: "title",
               placeholder: "عنوان المقال",
               required: true,
               maxLength: 100,
               onChange: (e) =>
-                setOrderObj({ ...orderObj, title: e.target.value }),
+                setProteinObj({ ...proteinObj, title: e.target.value }),
             },
           },
           {
@@ -172,12 +179,12 @@ const Orders = () => {
             label: "محتوي المقال",
             props: {
               type: "text",
-              value: orderObj.content,
+              value: proteinObj.content,
               name: "content",
               placeholder: "محتوي المقال",
               required: true,
               onChange: (e) =>
-                setOrderObj({ ...orderObj, content: e.target.value }),
+                setProteinObj({ ...proteinObj, content: e.target.value }),
             },
           },
           {
@@ -189,30 +196,30 @@ const Orders = () => {
               placeholder: "الصورة المصغرة",
               name: "mainImage",
               onChange: (e) =>
-                setOrderObj({
-                  ...orderObj,
+                setProteinObj({
+                  ...proteinObj,
                   mainImage: URL.createObjectURL(e.target.files[0]),
                 }),
             },
           },
         ]}
-      /> */}
+      />
       <div className="main-container">
         <div className="page-position">
           <h2>لوحة التحكم</h2>
           <p>/</p>
-          <h6>طلبات الشراء</h6>
+          <h6>البروتينات</h6>
         </div>
         <div className="container">
           {/*<SearchBox />*/}
-          {/* <div className="add-new">
+          <div className="add-new">
             <button
               className="btn-add-new"
               onClick={() => setAddBoxVisible(true)}
             >
               أضف جديد
             </button>
-          </div> */}
+          </div>
           <Table
             actions={{
               edit: onClickEdit,
@@ -220,28 +227,18 @@ const Orders = () => {
             }}
             headers={[
               "#",
-              "المشتري",
-              "المنتج",
-              "وسيلة الدفع",
-              "حالة الدفع",
-              "صورة تأكيد الدفع",
-              "تاريخ الطلب",
+              "الصورة المصغرة",
+              "اسم البروتين",
+              "وصف البروتين",
+              "تاريخ الإضافة",
             ]}
             data={
-              orders &&
-              orders.map((u) => [
+              proteins &&
+              proteins.map((u) => [
                 u._id,
-                u.userId,
-                u.productId,
-                u.paymentMethodId,
-                u.statusId == 1
-                  ? "لم يتم الدفع"
-                  : u.statusId == 2
-                  ? "تم الدفع"
-                  : u.statusId == 3
-                  ? "ملغي"
-                  : "غير معروف",
-                { type: "img", src: u.paymentImage },
+                { type: "img", src: u.mainImage },
+                u.name,
+                u.description,
                 u.createDate,
               ])
             }
@@ -252,4 +249,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Proteins;

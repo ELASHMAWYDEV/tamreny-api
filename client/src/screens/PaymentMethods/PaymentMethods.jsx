@@ -22,8 +22,8 @@ const PaymentMethods = () => {
 
   const [paymentMethodObj, setPaymentMethodObj] = useState({
     _id: 0,
-    title: "",
-    content: "",
+    name: "",
+    description: "",
     mainImage: "",
     createDate: "",
   });
@@ -45,8 +45,8 @@ const PaymentMethods = () => {
     if (addBoxVisible)
       setPaymentMethodObj({
         _id: 0,
-        title: "",
-        content: "",
+        name: "",
+        description: "",
         mainImage: "",
         createDate: "",
       });
@@ -81,7 +81,7 @@ const PaymentMethods = () => {
         visible={addBoxVisible}
         setVisible={setAddBoxVisible}
         options={{
-          title: "اضافة مقال جديد",
+          title: "اضافة وسيلة دفع جديد",
           onSave: async () => {
             const paymentMethod = await addPaymentMethod(addFormRef);
             if (paymentMethod) {
@@ -95,51 +95,34 @@ const PaymentMethods = () => {
         inputs={[
           {
             tag: "input",
-            label: "عنوان المقال",
+            label: "اسم وسيلة دفع",
 
             props: {
               type: "text",
-              name: "title",
+              name: "name",
               maxLength: 100,
-              placeholder: "عنوان المقال",
+              placeholder: "اسم وسيلة دفع",
               required: true,
               onChange: (e) =>
                 setPaymentMethodObj({
                   ...paymentMethodObj,
-                  title: e.target.value,
+                  name: e.target.value,
                 }),
             },
           },
           {
             tag: "textarea",
-            label: "محتوي المقال",
+            label: "خطوات الدفع",
             props: {
               type: "text",
-              name: "content",
-              placeholder: "محتوي المقال",
+              name: "description",
+              placeholder: "خطوات الدفع",
               required: true,
 
               onChange: (e) =>
                 setPaymentMethodObj({
                   ...paymentMethodObj,
-                  content: e.target.value,
-                }),
-            },
-          },
-          {
-            tag: "input",
-            label: "الصورة المصغرة",
-            props: {
-              type: "file",
-              accept: ".jpg, .png, .jpeg",
-              name: "mainImage",
-              placeholder: "الصورة المصغرة",
-              required: true,
-
-              onChange: (e) =>
-                setPaymentMethodObj({
-                  ...paymentMethodObj,
-                  mainImage: e.target.files[0],
+                  description: e.target.value,
                 }),
             },
           },
@@ -149,7 +132,7 @@ const PaymentMethods = () => {
         visible={editBoxVisible}
         setVisible={setEditBoxVisible}
         options={{
-          title: `تعديل المستخدم رقم ${paymentMethodObj._id}`,
+          name: `تعديل المستخدم رقم ${paymentMethodObj._id}`,
           onSave: async () => {
             const result = await editPaymentMethod(editFormRef);
             if (result) {
@@ -173,34 +156,34 @@ const PaymentMethods = () => {
           },
           {
             tag: "input",
-            label: "عنوان المقال",
+            label: "اسم وسيلة دفع",
             props: {
               type: "text",
-              value: paymentMethodObj.title,
-              name: "title",
-              placeholder: "عنوان المقال",
+              value: paymentMethodObj.name,
+              name: "name",
+              placeholder: "اسم وسيلة دفع",
               required: true,
               maxLength: 100,
               onChange: (e) =>
                 setPaymentMethodObj({
                   ...paymentMethodObj,
-                  title: e.target.value,
+                  name: e.target.value,
                 }),
             },
           },
           {
             tag: "textarea",
-            label: "محتوي المقال",
+            label: "خطوات الدفع",
             props: {
               type: "text",
-              value: paymentMethodObj.content,
-              name: "content",
-              placeholder: "محتوي المقال",
+              value: paymentMethodObj.description,
+              name: "description",
+              placeholder: "خطوات الدفع",
               required: true,
               onChange: (e) =>
                 setPaymentMethodObj({
                   ...paymentMethodObj,
-                  content: e.target.value,
+                  description: e.target.value,
                 }),
             },
           },
@@ -225,10 +208,10 @@ const PaymentMethods = () => {
         <div className="page-position">
           <h2>لوحة التحكم</h2>
           <p>/</p>
-          <h6>المقالات</h6>
+          <h6>اليلة دفعات</h6>
         </div>
         <div className="container">
-          <SearchBox />
+          {/*<SearchBox />*/}
           <div className="add-new">
             <button
               className="btn-add-new"
@@ -242,12 +225,7 @@ const PaymentMethods = () => {
               edit: onClickEdit,
               delete: onClickDelete,
             }}
-            headers={[
-              "#",
-              "اسم وسيلة الدفع",
-              "خطوات الدفع للعميل",
-              "تاريخ الإضافة",
-            ]}
+            headers={["#", "اسم وسيلة الدفع", "خطوات الدفع"]}
             data={
               paymentMethods &&
               paymentMethods.map((u) => [u._id, u.name, u.description])

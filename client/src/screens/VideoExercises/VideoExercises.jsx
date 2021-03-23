@@ -2,29 +2,29 @@ import { useState, useEffect, useRef } from "react";
 import { Table, DataBox, SearchBox, DeleteBox } from "../../components";
 
 //Hooks
-import useProteinsHook from "./hooks/index";
+import useVideoExercisesHook from "./hooks/index";
 
 //Styles
 import "./style.scss";
 
-const Proteins = () => {
+const VideoExercises = () => {
   const {
-    getProteins,
-    deleteProtein,
-    addProtein,
-    editProtein,
-  } = useProteinsHook();
+    getVideoExercises,
+    deleteVideoExercise,
+    addVideoExercise,
+    editVideoExercise,
+  } = useVideoExercisesHook();
 
-  const [proteins, setProteins] = useState([]);
+  const [videoExercises, setVideoExercises] = useState([]);
   const [addBoxVisible, setAddBoxVisible] = useState(false);
   const [editBoxVisible, setEditBoxVisible] = useState(false);
   const [deleteBoxVisible, setDeleteBoxVisible] = useState(false);
 
-  const [proteinObj, setProteinObj] = useState({
+  const [videoExerciseObj, setVideoExerciseObj] = useState({
     _id: 0,
-    name: "",
+    title: "",
     description: "",
-    mainImage: "",
+    videos: [],
     createDate: "",
   });
 
@@ -33,32 +33,32 @@ const Proteins = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await getProteins();
+      const result = await getVideoExercises();
 
       if (result) {
-        setProteins(result);
+        setVideoExercises(result);
       }
     })();
   }, []);
 
   useEffect(() => {
     if (addBoxVisible)
-      setProteinObj({
+      setVideoExerciseObj({
         _id: 0,
-        name: "",
+        title: "",
         description: "",
-        mainImage: "",
+        videos: [],
         createDate: "",
       });
   }, [addBoxVisible]);
 
   const onClickEdit = (_id) => {
-    const protein = proteins.find((u) => u._id === _id);
-    setProteinObj(protein);
+    const videoExercise = videoExercises.find((u) => u._id === _id);
+    setVideoExerciseObj(videoExercise);
     setEditBoxVisible(true);
   };
   const onClickDelete = (_id) => {
-    setProteinObj(proteins.find((u) => u._id === _id));
+    setVideoExerciseObj(videoExercises.find((u) => u._id === _id));
     setDeleteBoxVisible(true);
   };
 
@@ -67,10 +67,12 @@ const Proteins = () => {
       <DeleteBox
         visible={deleteBoxVisible}
         setVisible={setDeleteBoxVisible}
-        name={`حذف البروتينة رقم ${proteinObj._id}`}
+        title={`حذف التمرين رقم ${videoExerciseObj._id}`}
         onDelete={async () => {
-          if (await deleteProtein(proteinObj._id)) {
-            setProteins(proteins.filter((u) => u._id !== proteinObj._id));
+          if (await deleteVideoExercise(videoExerciseObj._id)) {
+            setVideoExercises(
+              videoExercises.filter((u) => u._id !== videoExerciseObj._id)
+            );
             setDeleteBoxVisible(false);
           }
         }}
@@ -79,11 +81,11 @@ const Proteins = () => {
         visible={addBoxVisible}
         setVisible={setAddBoxVisible}
         options={{
-          name: "اضافة مقال جديد",
+          title: "اضافة تمرين جديد",
           onSave: async () => {
-            const protein = await addProtein(addFormRef);
-            if (protein) {
-              setProteins([...proteins, protein]);
+            const videoExercise = await addVideoExercise(addFormRef);
+            if (videoExercise) {
+              setVideoExercises([...videoExercises, videoExercise]);
               setAddBoxVisible(false);
             }
           },
@@ -93,43 +95,58 @@ const Proteins = () => {
         inputs={[
           {
             tag: "input",
-            label: "اسم البروتين",
+            label: "عنوان التمرين",
 
             props: {
               type: "text",
-              name: "name",
+              name: "title",
               maxLength: 100,
-              placeholder: "اسم البروتين",
+              placeholder: "عنوان التمرين",
               required: true,
               onChange: (e) =>
-                setProteinObj({ ...proteinObj, name: e.target.value }),
+                setVideoExerciseObj({
+                  ...videoExerciseObj,
+                  title: e.target.value,
+                }),
             },
           },
           {
             tag: "textarea",
-            label: "وصف البروتين",
+            label: "محتوي التمرين",
             props: {
               type: "text",
               name: "description",
-              placeholder: "وصف البروتين",
+              placeholder: "محتوي التمرين",
               required: true,
 
               onChange: (e) =>
-                setProteinObj({ ...proteinObj, description: e.target.value }),
+                setVideoExerciseObj({
+                  ...videoExerciseObj,
+                  description: e.target.value,
+                }),
             },
           },
           {
             tag: "input",
-            label: "الصورة المصغرة",
+            label: "الفيديو",
             props: {
-              type: "file",
-              accept: ".jpg, .png, .jpeg",
-              name: "mainImage",
-              placeholder: "الصورة المصغرة",
+              name: "videoId",
+              placeholder: "قم بنسخ رقم تعريف الفيديو",
               required: true,
 
               onChange: (e) =>
-                setProteinObj({ ...proteinObj, mainImage: e.target.files[0] }),
+                setVideoExerciseObj({
+                  ...videoExerciseObj,
+                  videos: e.target.files,
+                }),
+            },
+          },
+          {
+            tag: "input",
+            props: {
+              name: "type",
+              type: "hidden",
+              value: 2,
             },
           },
         ]}
@@ -138,12 +155,12 @@ const Proteins = () => {
         visible={editBoxVisible}
         setVisible={setEditBoxVisible}
         options={{
-          name: `تعديل المستخدم رقم ${proteinObj._id}`,
+          title: `تعديل التمرين رقم ${videoExerciseObj._id}`,
           onSave: async () => {
-            const result = await editProtein(editFormRef);
+            const result = await editVideoExercise(editFormRef);
             if (result) {
-              setProteins(
-                proteins.map((u) => (u._id === result._id ? result : u))
+              setVideoExercises(
+                videoExercises.map((u) => (u._id === result._id ? result : u))
               );
               setEditBoxVisible(false);
             }
@@ -156,50 +173,64 @@ const Proteins = () => {
             tag: "input",
             props: {
               type: "hidden",
-              value: proteinObj._id,
+              value: videoExerciseObj._id,
               name: "_id",
             },
           },
           {
             tag: "input",
-            label: "اسم البروتين",
+            label: "عنوان التمرين",
             props: {
               type: "text",
-              value: proteinObj.name,
-              name: "name",
-              placeholder: "اسم البروتين",
+              value: videoExerciseObj.title,
+              name: "title",
+              placeholder: "عنوان التمرين",
               required: true,
               maxLength: 100,
               onChange: (e) =>
-                setProteinObj({ ...proteinObj, name: e.target.value }),
+                setVideoExerciseObj({
+                  ...videoExerciseObj,
+                  title: e.target.value,
+                }),
             },
           },
           {
             tag: "textarea",
-            label: "وصف البروتين",
+            label: "محتوي التمرين",
             props: {
               type: "text",
-              value: proteinObj.description,
+              value: videoExerciseObj.description,
               name: "description",
-              placeholder: "وصف البروتين",
+              placeholder: "محتوي التمرين",
               required: true,
               onChange: (e) =>
-                setProteinObj({ ...proteinObj, description: e.target.value }),
+                setVideoExerciseObj({
+                  ...videoExerciseObj,
+                  description: e.target.value,
+                }),
             },
           },
           {
             tag: "input",
-            label: "الصورة المصغرة",
+            label: "الفيديو",
             props: {
-              type: "file",
-              accept: ".jpg, .png, .jpeg",
-              placeholder: "الصورة المصغرة",
-              name: "mainImage",
+              name: "videoId",
+              placeholder: "قم بنسخ رقم تعريف الفيديو",
+              required: true,
+
               onChange: (e) =>
-                setProteinObj({
-                  ...proteinObj,
-                  mainImage: URL.createObjectURL(e.target.files[0]),
+                setVideoExerciseObj({
+                  ...videoExerciseObj,
+                  videos: e.target.files,
                 }),
+            },
+          },
+          {
+            tag: "input",
+            props: {
+              name: "type",
+              type: "hidden",
+              value: 2,
             },
           },
         ]}
@@ -208,7 +239,7 @@ const Proteins = () => {
         <div className="page-position">
           <h2>لوحة التحكم</h2>
           <p>/</p>
-          <h6>البروتينات</h6>
+          <h6>تمارين رياضية (صور)</h6>
         </div>
         <div className="container">
           {/*<SearchBox />*/}
@@ -227,17 +258,17 @@ const Proteins = () => {
             }}
             headers={[
               "#",
-              "الصورة المصغرة",
-              "اسم البروتين",
-              "وصف البروتين",
+              "الفيديو",
+              "العنوان",
+              "محتوي التمرينة",
               "تاريخ الإضافة",
             ]}
             data={
-              proteins &&
-              proteins.map((u) => [
+              videoExercises &&
+              videoExercises.map((u) => [
                 u._id,
-                { type: "img", src: u.mainImage },
-                u.name,
+                { type: "video", videoId: u.videoId },
+                u.title,
                 u.description,
                 u.createDate,
               ])
@@ -249,4 +280,4 @@ const Proteins = () => {
   );
 };
 
-export default Proteins;
+export default VideoExercises;

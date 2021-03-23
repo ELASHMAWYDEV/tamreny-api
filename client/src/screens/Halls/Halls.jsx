@@ -78,7 +78,7 @@ const Halls = () => {
         visible={addBoxVisible}
         setVisible={setAddBoxVisible}
         options={{
-          name: "اضافة قاعة جديد",
+          title: "اضافة قاعة جديد",
           onSave: async () => {
             const hall = await addHall(addFormRef);
             if (hall) {
@@ -184,7 +184,7 @@ const Halls = () => {
         visible={editBoxVisible}
         setVisible={setEditBoxVisible}
         options={{
-          name: `تعديل القاعة رقم ${hallObj._id}`,
+          title: `تعديل القاعة رقم ${hallObj._id}`,
           onSave: async () => {
             const result = await editHall(editFormRef);
             if (result) {
@@ -198,22 +198,15 @@ const Halls = () => {
         inputs={[
           {
             tag: "input",
-            props: {
-              type: "hidden",
-              value: hallObj._id,
-              name: "_id",
-            },
-          },
-          {
-            tag: "input",
             label: "اسم القاعة",
+
             props: {
               type: "text",
-              value: hallObj.name,
               name: "name",
+              maxLength: 100,
               placeholder: "اسم القاعة",
               required: true,
-              maxLength: 100,
+              defaultValue: hallObj.name,
               onChange: (e) =>
                 setHallObj({
                   ...hallObj,
@@ -222,14 +215,33 @@ const Halls = () => {
             },
           },
           {
+            tag: "input",
+            label: "المدينة",
+            props: {
+              type: "text",
+              name: "city",
+              maxLength: 100,
+              placeholder: "المدينة",
+              required: true,
+              defaultValue: hallObj.city,
+
+              onChange: (e) =>
+                setHallObj({
+                  ...hallObj,
+                  city: e.target.value,
+                }),
+            },
+          },
+          {
             tag: "textarea",
             label: "وصف القاعة",
             props: {
               type: "text",
-              value: hallObj.brief,
               name: "brief",
               placeholder: "وصف القاعة",
               required: true,
+              defaultValue: hallObj.brief,
+
               onChange: (e) =>
                 setHallObj({
                   ...hallObj,
@@ -238,14 +250,37 @@ const Halls = () => {
             },
           },
           {
+            tag: "textarea",
+            label: "الاشتراكات",
+            props: {
+              type: "text",
+              name: "subscriptions",
+              placeholder: "مثال:\n 150,شهري\n1200,سنوي",
+              required: true,
+              defaultValue:
+                hallObj.subscriptions &&
+                hallObj.subscriptions.map(
+                  (item) => item.price + "," + item.name + "\n"
+                ),
+              onChange: (e) =>
+                setHallObj({
+                  ...hallObj,
+                  // subscriptions: e.target.value,
+                }),
+            },
+          },
+
+          {
             tag: "input",
             label: "الصور",
             props: {
               type: "file",
               accept: ".jpg, .png, .jpeg",
-              multiple: true,
-              placeholder: "الصور",
               name: "images",
+              placeholder: "الصور",
+              multiple: true,
+              required: true,
+
               onChange: (e) =>
                 setHallObj({
                   ...hallObj,
@@ -262,7 +297,7 @@ const Halls = () => {
           <h6>تمارين رياضية (صور)</h6>
         </div>
         <div className="container">
-          <SearchBox />
+          {/*<SearchBox />*/}
           <div className="add-new">
             <button
               className="btn-add-new"

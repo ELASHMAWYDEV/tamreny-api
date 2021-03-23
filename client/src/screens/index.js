@@ -3,6 +3,7 @@ export { default as Stats } from "./Stats/Stats";
 export { default as Users } from "./Users/Users";
 export { default as Articles } from "./Articles/Articles";
 export { default as ImageExercises } from "./ImageExercises/ImageExercises";
+export { default as VideoExercises } from "./VideoExercises/VideoExercises";
 export { default as Halls } from "./Halls/Halls";
 export { default as TermsOfServices } from "./TermsOfServices.jsx";
 export { default as PrivacyPolicy } from "./PrivacyPolicy.jsx";

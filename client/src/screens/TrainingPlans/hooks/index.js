@@ -1,19 +1,19 @@
 import axios from "axios";
 import { useNotifierContext } from "../../../providers";
 
-const usePaymentMethodsHook = () => {
+const useProteinsHook = () => {
   const { setNotifiers } = useNotifierContext();
 
-  const getPaymentMethods = async () => {
+  const getProteins = async () => {
     try {
-      let response = await axios.post("/api/paymentMethods/get");
+      let response = await axios.post("/api/proteins/get");
       let data = await response.data;
 
       if (!data.status) {
         setNotifiers({ errors: data.errors });
         return false;
       }
-      return data.paymentMethods;
+      return data.proteins;
     } catch (e) {
       alert(e.message);
     }
@@ -21,9 +21,9 @@ const usePaymentMethodsHook = () => {
 
   /******************************************************/
 
-  const deletePaymentMethod = async (_id) => {
+  const deleteProtein = async (_id) => {
     try {
-      let response = await axios.post("/api/paymentMethods/delete", { _id });
+      let response = await axios.post("/api/proteins/delete", { _id });
       let data = await response.data;
 
       if (!data.status) {
@@ -39,15 +39,11 @@ const usePaymentMethodsHook = () => {
 
   /******************************************************/
 
-  const addPaymentMethod = async (formRef) => {
+  const addProtein = async (formRef) => {
     try {
-      let paymentMethodData = new FormData(formRef.current);
+      let proteinData = new FormData(formRef.current);
 
-      console.log(formRef.current)
-      let response = await axios.post(
-        "/api/paymentMethods/add",
-        paymentMethodData
-      );
+      let response = await axios.post("/api/proteins/add", proteinData);
       let data = await response.data;
 
       if (!data.status) {
@@ -55,21 +51,19 @@ const usePaymentMethodsHook = () => {
         return false;
       }
       setNotifiers({ success: data.messages });
-      return data.paymentMethod;
+      return data.protein;
     } catch (e) {
       alert(e.message);
     }
   };
   /******************************************************/
 
-  const editPaymentMethod = async (formRef) => {
+  const editProtein = async (formRef) => {
     try {
-      let paymentMethodData = new FormData(formRef.current);
 
-      let response = await axios.post(
-        "/api/paymentMethods/edit",
-        paymentMethodData
-      );
+      let proteinData = new FormData(formRef.current);
+
+      let response = await axios.post("/api/proteins/edit", proteinData);
       let data = await response.data;
 
       console.log(data);
@@ -78,18 +72,18 @@ const usePaymentMethodsHook = () => {
         return false;
       }
       setNotifiers({ success: data.messages });
-      return data.paymentMethod;
+      return data.protein;
     } catch (e) {
       alert(e.message);
     }
   };
 
   return {
-    getPaymentMethods,
-    deletePaymentMethod,
-    addPaymentMethod,
-    editPaymentMethod,
+    getProteins,
+    deleteProtein,
+    addProtein,
+    editProtein,
   };
 };
 
-export default usePaymentMethodsHook;
+export default useProteinsHook;

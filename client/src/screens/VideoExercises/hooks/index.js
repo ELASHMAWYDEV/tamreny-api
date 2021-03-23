@@ -1,19 +1,20 @@
 import axios from "axios";
 import { useNotifierContext } from "../../../providers";
 
-const usePaymentMethodsHook = () => {
+const useVideoExercisesHook = () => {
   const { setNotifiers } = useNotifierContext();
 
-  const getPaymentMethods = async () => {
+  const getVideoExercises = async () => {
     try {
-      let response = await axios.post("/api/paymentMethods/get");
+      let response = await axios.post("/api/exercises/get", { type: 2 });
       let data = await response.data;
 
       if (!data.status) {
         setNotifiers({ errors: data.errors });
         return false;
       }
-      return data.paymentMethods;
+      console.log(data);
+      return data.exercises;
     } catch (e) {
       alert(e.message);
     }
@@ -21,9 +22,12 @@ const usePaymentMethodsHook = () => {
 
   /******************************************************/
 
-  const deletePaymentMethod = async (_id) => {
+  const deleteVideoExercise = async (_id) => {
     try {
-      let response = await axios.post("/api/paymentMethods/delete", { _id });
+      let response = await axios.post("/api/exercises/delete", {
+        _id,
+        type: 2,
+      });
       let data = await response.data;
 
       if (!data.status) {
@@ -39,15 +43,11 @@ const usePaymentMethodsHook = () => {
 
   /******************************************************/
 
-  const addPaymentMethod = async (formRef) => {
+  const addVideoExercise = async (formRef) => {
     try {
-      let paymentMethodData = new FormData(formRef.current);
+      let videoExerciseData = new FormData(formRef.current);
 
-      console.log(formRef.current)
-      let response = await axios.post(
-        "/api/paymentMethods/add",
-        paymentMethodData
-      );
+      let response = await axios.post("/api/exercises/add", videoExerciseData);
       let data = await response.data;
 
       if (!data.status) {
@@ -55,21 +55,21 @@ const usePaymentMethodsHook = () => {
         return false;
       }
       setNotifiers({ success: data.messages });
-      return data.paymentMethod;
+      return data.videoExercise;
     } catch (e) {
       alert(e.message);
     }
   };
   /******************************************************/
 
-  const editPaymentMethod = async (formRef) => {
+  const editVideoExercise = async (formRef) => {
     try {
-      let paymentMethodData = new FormData(formRef.current);
+      let videoExerciseData = new FormData(formRef.current);
 
-      let response = await axios.post(
-        "/api/paymentMethods/edit",
-        paymentMethodData
-      );
+      let response = await axios.post("/api/exercises/edit", {
+        ...videoExerciseData,
+        type: 2,
+      });
       let data = await response.data;
 
       console.log(data);
@@ -78,18 +78,18 @@ const usePaymentMethodsHook = () => {
         return false;
       }
       setNotifiers({ success: data.messages });
-      return data.paymentMethod;
+      return data.videoExercise;
     } catch (e) {
       alert(e.message);
     }
   };
 
   return {
-    getPaymentMethods,
-    deletePaymentMethod,
-    addPaymentMethod,
-    editPaymentMethod,
+    getVideoExercises,
+    deleteVideoExercise,
+    addVideoExercise,
+    editVideoExercise,
   };
 };
 
-export default usePaymentMethodsHook;
+export default useVideoExercisesHook;

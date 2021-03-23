@@ -5,7 +5,7 @@ const autoIncreament = require("mongoose-auto-increment");
 autoIncreament.initialize(mongoose.connection);
 
 const VideoExerciseSchema = new mongoose.Schema({
-  categoryId: { type: Number, ref: "VideoExercisesCategory", required: true },
+  categoryId: { type: Number, ref: "VideoExercisesCategory", default: 1 },
   title: String,
   description: String,
   videoId: String,

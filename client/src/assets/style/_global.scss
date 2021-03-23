@@ -90,9 +90,12 @@ $dark-blue: #0984e3;
   border-radius: 8px;
   background-color: $white;
   min-height: max-content;
-  width: max-content;
+  width: 600px;
   max-width: 98%;
   top: 0;
+  h3 {
+    text-align: center;
+  }
   label {
     display: inline-block;
     width: 130px;
@@ -127,7 +130,9 @@ $dark-blue: #0984e3;
   }
   .input-items {
     @include flex;
+    justify-content: center;
     flex-direction: column;
+    width: 100%;
     .input-item {
       margin: 12px auto;
       width: 100%;

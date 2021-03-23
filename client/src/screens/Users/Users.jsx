@@ -275,7 +275,7 @@ const Users = () => {
           <h6>المستخدمين</h6>
         </div>
         <div className="container">
-          <SearchBox />
+          {/*<SearchBox />*/}
           <div className="add-new">
             <button
               className="btn-add-new"

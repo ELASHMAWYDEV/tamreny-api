@@ -16,6 +16,7 @@ import {
   Users,
   Articles,
   ImageExercises,
+  VideoExercises,
   Halls,
   Products,
   Orders,
@@ -44,7 +45,7 @@ const App = () => {
               <Route path="/admin/users" component={Users} />
               <Route path="/admin/articles" component={Articles} />
               <Route path="/admin/image-exercises" component={ImageExercises} />
-              <Route path="/admin/video-exercises" component={Stats} />
+              <Route path="/admin/video-exercises" component={VideoExercises} />
               <Route path="/admin/halls" component={Halls} />
               <Route path="/admin/products" component={Products} />
               <Route path="/admin/orders" component={Orders} />

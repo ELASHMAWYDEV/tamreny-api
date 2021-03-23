@@ -86,7 +86,7 @@ router.post("/", async (req, res) => {
           categoryId: validateExercise.categoryId,
           title: validateExercise.title,
           description: validateExercise.description,
-          videoUrl: validateExercise.videoUrl,
+          videoId: validateExercise.videoId,
         });
 
         if (!saveExercise) {

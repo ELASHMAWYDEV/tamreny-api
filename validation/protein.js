@@ -5,7 +5,7 @@ module.exports = async ({ name, description, files }) => {
     //Required
     if (!(files && files.mainImage)) errors.push("يجب رفع صورة للمكمل الغذائي");
     if (!name) errors.push("يجب وضع عنوان للمكمل الغذائي");
-    if (!description) errors.push("يجب كتابة محتوي المقال");
+    if (!description) errors.push("يجب كتابة وصف المكمل الغذائي ");
 
     //Send any empty errors
     if (errors.length !== 0)

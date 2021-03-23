@@ -18,6 +18,8 @@ const DataBox = ({ options, inputs, visible, setVisible }) => {
   const [dataUrls, setDataUrls] = useState([]);
 
   useEffect(() => {
+    if (options.images) bufferToImage({ images: options.images });
+
     window.addEventListener("mouseup", containerHandler);
   }, []);
 
@@ -30,17 +32,28 @@ const DataBox = ({ options, inputs, visible, setVisible }) => {
     }
   };
 
-  const bufferToImage = () => {
-    setDataUrls([]);
-
-    console.log(dataUrls);
-    for (let i = 0; i < inputFileRef.current.files.length; i++) {
-      let reader = new FileReader();
-      reader.readAsDataURL(inputFileRef.current.files[i]);
-      reader.onload = () => {
-        setDataUrls([...dataUrls, reader.result]);
-      };
+  const bufferToImage = async ({ images = [] }) => {
+    if (images.length != 0) {
+      for (let i = 0; i < images.length; i++) {
+        let blob = await fetch(images[i]).then((r) => r.blob());
+        let reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onload = () => {
+          setDataUrls([...dataUrls, reader.result]);
+          inputFileRef.current &&
+            inputFileRef.current.files.append(reader.result);
+        };
+      }
     }
+
+    if (inputFileRef.current)
+      for (let i = 0; i < inputFileRef.current.files.length; i++) {
+        let reader = new FileReader();
+        reader.readAsDataURL(inputFileRef.current.files[i]);
+        reader.onload = () => {
+          setDataUrls([...dataUrls, reader.result]);
+        };
+      }
   };
 
   return (

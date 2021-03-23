@@ -8,10 +8,12 @@ const Notifier = () => {
 
   useEffect(() => {
     window.onload = (e) => {
-      alarmsRef.current.style.top = window.pageYOffset + 20 + "px";
-      window.addEventListener("scroll", (e) => {
+      if (alarmsRef.current) {
         alarmsRef.current.style.top = window.pageYOffset + 20 + "px";
-      });
+        window.addEventListener("scroll", (e) => {
+          alarmsRef.current.style.top = window.pageYOffset + 20 + "px";
+        });
+      }
     };
   }, []);
   return (

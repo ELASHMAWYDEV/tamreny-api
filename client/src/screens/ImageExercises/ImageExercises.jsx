@@ -230,7 +230,7 @@ const ImageExercises = () => {
           <h6>تمارين رياضية (صور)</h6>
         </div>
         <div className="container">
-          <SearchBox />
+          {/*<SearchBox />*/}
           <div className="add-new">
             <button
               className="btn-add-new"

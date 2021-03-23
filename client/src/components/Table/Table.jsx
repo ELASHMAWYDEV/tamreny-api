@@ -22,8 +22,7 @@ const Table = ({ headers, data, actions }) => {
         <table>
           <thead>
             <tr>
-              {headers.length !== 0 &&
-                headers.map((head, i) => <th key={i}>{head}</th>)}
+              {headers && headers.map((head, i) => <th key={i}>{head}</th>)}
               {actions && <th>الإجراء</th>}
             </tr>
           </thead>
@@ -32,29 +31,35 @@ const Table = ({ headers, data, actions }) => {
               data.length !== 0 &&
               data.map((inputs, i) => (
                 <tr key={i}>
-                  {inputs.map((input) => (
-                    <td>
-                      {input && input.type == "img" ? (
-                        <img src={input.src} className="main-img" />
-                      ) : input && input.type == "slider" ? (
-                        <Swiper
-                          spaceBetween={0}
-                          slidesPerView={1}
-                          pagination={{ clickable: true }}
-                        >
-                          {input.images.map((img) => (
-                            <SwiperSlide style={{ width: 160 }}>
-                              <img src={img} className="slider-img" />
-                            </SwiperSlide>
-                          ))}
-                        </Swiper>
-                      ) : input && input.type == "location" ? (
-                        <button className="maps-btn">عرض الخريطة</button>
-                      ) : (
-                        input
-                      )}
-                    </td>
-                  ))}
+                  {inputs &&
+                    inputs.map((input) => (
+                      <td>
+                        {input && input.type == "img" ? (
+                          <img src={input.src} className="main-img" />
+                        ) : input && input.type == "slider" ? (
+                          <Swiper
+                            spaceBetween={0}
+                            slidesPerView={1}
+                            pagination={{ clickable: true }}
+                          >
+                            {input.images.map((img) => (
+                              <SwiperSlide style={{ width: 160 }}>
+                                <img src={img} className="slider-img" />
+                              </SwiperSlide>
+                            ))}
+                          </Swiper>
+                        ) : input && input.type == "location" ? (
+                          <button className="maps-btn">عرض الخريطة</button>
+                        ) : input && input.type == "video" ? (
+                          <iframe
+                            className="video-frame"
+                            src={`http://localhost:5000/play-youtube?videoId=${input.videoId}`}
+                          ></iframe>
+                        ) : (
+                          input
+                        )}
+                      </td>
+                    ))}
                   {actions && (
                     <td className="action">
                       {actions.edit && (

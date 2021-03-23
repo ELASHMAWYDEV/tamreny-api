@@ -13,7 +13,7 @@ module.exports = async ({
 
     //Required
     if (
-      // process.env.NODE_ENV != "development" &&
+      process.env.NODE_ENV != "development" &&
       !(files && files.images.length === 0)
     )
       errors.push("يجب رفع صورة واحدة علي الأقل");

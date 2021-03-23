@@ -23,7 +23,9 @@ const Products = () => {
   const [productObj, setProductObj] = useState({
     _id: 0,
     title: "",
-    content: "",
+    price: "",
+    description: "",
+    coachBrief: "",
     mainImage: "",
     createDate: "",
   });
@@ -46,7 +48,9 @@ const Products = () => {
       setProductObj({
         _id: 0,
         title: "",
-        content: "",
+        price: "",
+        description: "",
+        coachBrief: "",
         mainImage: "",
         createDate: "",
       });
@@ -67,7 +71,7 @@ const Products = () => {
       <DeleteBox
         visible={deleteBoxVisible}
         setVisible={setDeleteBoxVisible}
-        title={`حذف المقالة رقم ${productObj._id}`}
+        title={`حذف المنتج رقم ${productObj._id}`}
         onDelete={async () => {
           if (await deleteProduct(productObj._id)) {
             setProducts(products.filter((u) => u._id !== productObj._id));
@@ -79,7 +83,7 @@ const Products = () => {
         visible={addBoxVisible}
         setVisible={setAddBoxVisible}
         options={{
-          title: "اضافة مقال جديد",
+          title: "اضافة منتج جديد",
           onSave: async () => {
             const product = await addProduct(addFormRef);
             if (product) {
@@ -93,13 +97,13 @@ const Products = () => {
         inputs={[
           {
             tag: "input",
-            label: "عنوان المقال",
+            label: "عنوان المنتج",
 
             props: {
               type: "text",
               name: "title",
               maxLength: 100,
-              placeholder: "عنوان المقال",
+              placeholder: "عنوان المنتج",
               required: true,
               onChange: (e) =>
                 setProductObj({ ...productObj, title: e.target.value }),
@@ -107,15 +111,41 @@ const Products = () => {
           },
           {
             tag: "textarea",
-            label: "محتوي المقال",
+            label: "وصف المنتج",
             props: {
               type: "text",
               name: "content",
-              placeholder: "محتوي المقال",
+              placeholder: "وصف المنتج",
               required: true,
 
               onChange: (e) =>
-                setProductObj({ ...productObj, content: e.target.value }),
+                setProductObj({ ...productObj, description: e.target.value }),
+            },
+          },
+          {
+            tag: "input",
+            label: "السعر",
+            props: {
+              type: "text",
+              name: "price",
+              placeholder: "السعر",
+              required: true,
+
+              onChange: (e) =>
+                setProductObj({ ...productObj, price: e.target.value }),
+            },
+          },
+          {
+            tag: "textarea",
+            label: "نبذة عن الكوتش",
+            props: {
+              type: "text",
+              name: "cocoachBriefntent",
+              placeholder: "نبذة عن الكوتش",
+              required: true,
+
+              onChange: (e) =>
+                setProductObj({ ...productObj, coachBrief: e.target.value }),
             },
           },
           {
@@ -162,12 +192,12 @@ const Products = () => {
           },
           {
             tag: "input",
-            label: "عنوان المقال",
+            label: "عنوان المنتج",
             props: {
               type: "text",
               value: productObj.title,
               name: "title",
-              placeholder: "عنوان المقال",
+              placeholder: "عنوان المنتج",
               required: true,
               maxLength: 100,
               onChange: (e) =>
@@ -176,15 +206,41 @@ const Products = () => {
           },
           {
             tag: "textarea",
-            label: "محتوي المقال",
+            label: "وصف المنتج",
             props: {
               type: "text",
-              value: productObj.content,
-              name: "content",
-              placeholder: "محتوي المقال",
+              value: productObj.description,
+              name: "description",
+              placeholder: "وصف المنتج",
               required: true,
               onChange: (e) =>
-                setProductObj({ ...productObj, content: e.target.value }),
+                setProductObj({ ...productObj, description: e.target.value }),
+            },
+          },
+          {
+            tag: "input",
+            label: "السعر",
+            props: {
+              type: "text",
+              name: "price",
+              placeholder: "السعر",
+              required: true,
+
+              onChange: (e) =>
+                setProductObj({ ...productObj, price: e.target.value }),
+            },
+          },
+          {
+            tag: "textarea",
+            label: "نبذة عن الكوتش",
+            props: {
+              type: "text",
+              name: "cocoachBriefntent",
+              placeholder: "نبذة عن الكوتش",
+              required: true,
+
+              onChange: (e) =>
+                setProductObj({ ...productObj, coachBrief: e.target.value }),
             },
           },
           {
@@ -211,7 +267,7 @@ const Products = () => {
           <h6>المنتجات</h6>
         </div>
         <div className="container">
-          <SearchBox />
+          {/* <SearchBox /> */}
           <div className="add-new">
             <button
               className="btn-add-new"
