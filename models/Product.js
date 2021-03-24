@@ -6,7 +6,7 @@ autoIncreament.initialize(mongoose.connection);
 
 const ProductSchema = new mongoose.Schema({
   title: String,
-  price: Number,
+  price: String,
   description: String,
   coachBrief: String,
   mainImage: String,

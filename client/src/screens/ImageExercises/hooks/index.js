@@ -47,10 +47,7 @@ const useImageExercisesHook = () => {
     try {
       let imageExerciseData = new FormData(formRef.current);
 
-      let response = await axios.post("/api/exercises/add", {
-        ...imageExerciseData,
-        type: 1,
-      });
+      let response = await axios.post("/api/exercises/add", imageExerciseData);
       let data = await response.data;
 
       if (!data.status) {
@@ -69,10 +66,10 @@ const useImageExercisesHook = () => {
     try {
       let imageExerciseData = new FormData(formRef.current);
 
-      let response = await axios.post("/api/imageExercises/edit", {
-        ...imageExerciseData,
-        type: 1,
-      });
+      let response = await axios.post(
+        "/api/imageExercises/edit",
+        imageExerciseData
+      );
       let data = await response.data;
 
       console.log(data);

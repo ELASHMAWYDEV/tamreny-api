@@ -7,7 +7,7 @@ module.exports = async ({ categoryId, title, description, files }) => {
     //Required
     if (!(files && files.images.length !== 0))
       errors.push("يجب رفع صورة واحدة علي الأقل ");
-    if (!categoryId) errors.push("يجب تحديد القسم");
+    // if (!categoryId) errors.push("يجب تحديد القسم");
     if (!title) errors.push("يجب وضع عنوان للتمرين");
     if (!description) errors.push("يجب كتابة وصف للتمرين");
 
@@ -21,12 +21,12 @@ module.exports = async ({ categoryId, title, description, files }) => {
     /******************************************************/
 
     //Check if category exist
-    let categorySearch = await ImageCategoryModel.findOne({ _id: categoryId });
-    if (!categorySearch)
-      return {
-        status: false,
-        errors: ["القسم الذي اخترته غير موجود في قاعدة البيانات"],
-      };
+    // let categorySearch = await ImageCategoryModel.findOne({ _id: categoryId });
+    // if (!categorySearch)
+    //   return {
+    //     status: false,
+    //     errors: ["القسم الذي اخترته غير موجود في قاعدة البيانات"],
+    //   };
 
     /******************************************************/
 
@@ -36,6 +36,7 @@ module.exports = async ({ categoryId, title, description, files }) => {
 
     //Image validation
     let images = files.images;
+
     //add the extension property to the image
     images = images.map((image) => {
       image.extension = image.name.split(".").pop();

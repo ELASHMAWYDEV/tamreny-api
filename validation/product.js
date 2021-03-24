@@ -20,7 +20,7 @@ module.exports = async ({ title, description, price, coachBrief, files }) => {
 
     //Image validation
     let mainImage = files.mainImage;
-    let extention = mainImage.title.split(".").pop();
+    let extention = mainImage.name.split(".").pop();
 
     if (!["jpg", "png", "jpeg"].includes(extention))
       errors.push("يجب أن يكون امتداد الصورة png أو jpeg أو jpg فقط");
@@ -41,6 +41,8 @@ module.exports = async ({ title, description, price, coachBrief, files }) => {
       mainImage,
     };
   } catch (e) {
+    console.log(`Error in /validation/product, error: ${e.message}`, e);
+
     return {
       status: false,
       errors: [e.message],

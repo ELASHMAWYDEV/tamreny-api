@@ -114,7 +114,7 @@ const Products = () => {
             label: "وصف المنتج",
             props: {
               type: "text",
-              name: "content",
+              name: "description",
               placeholder: "وصف المنتج",
               required: true,
 

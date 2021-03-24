@@ -144,6 +144,14 @@ const ImageExercises = () => {
                 }),
             },
           },
+          {
+            tag: "input",
+            props: {
+              name: "type",
+              type: "hidden",
+              value: 1,
+            },
+          },
         ]}
       />
       <DataBox
@@ -219,6 +227,14 @@ const ImageExercises = () => {
                   ...imageExerciseObj,
                   images: e.target.files,
                 }),
+            },
+          },
+          {
+            tag: "input",
+            props: {
+              name: "type",
+              type: "hidden",
+              value: 1,
             },
           },
         ]}

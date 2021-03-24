@@ -65,7 +65,6 @@ const useProductsHook = () => {
       let response = await axios.post("/api/products/edit", productData);
       let data = await response.data;
 
-      console.log(data);
       if (!data.status) {
         setNotifiers({ errors: data.errors });
         return false;

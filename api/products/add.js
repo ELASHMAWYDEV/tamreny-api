@@ -27,10 +27,13 @@ router.post("/", async (req, res) => {
 
     let { title, description, price, coachBrief, mainImage } = validateProduct;
 
+
+
     //Save the image
     const mainImageUniqueName = `${uuidv4()}.${mainImage.name
       .split(".")
       .pop()}`;
+
     await mainImage.mv(
       path.join(
         __dirname,
