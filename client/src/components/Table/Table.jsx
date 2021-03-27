@@ -49,7 +49,12 @@ const Table = ({ headers, data, actions }) => {
                             ))}
                           </Swiper>
                         ) : input && input.type == "location" ? (
-                          <button className="maps-btn">عرض الخريطة</button>
+                          <button
+                            className="maps-btn"
+                            onClick={input.onClick && input.onClick}
+                          >
+                            عرض الخريطة
+                          </button>
                         ) : input && input.type == "video" ? (
                           <iframe
                             className="video-frame"

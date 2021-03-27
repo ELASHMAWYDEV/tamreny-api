@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Table, DataBox, SearchBox, DeleteBox } from "../../components";
+import { Table, DataBox, SearchBox, DeleteBox, MapBox } from "../../components";
 
 //Hooks
 import useHallsHook from "./hooks/index";
@@ -14,6 +14,7 @@ const Halls = () => {
   const [addBoxVisible, setAddBoxVisible] = useState(false);
   const [editBoxVisible, setEditBoxVisible] = useState(false);
   const [deleteBoxVisible, setDeleteBoxVisible] = useState(false);
+  const [mapBoxVisible, setMapBoxVisible] = useState(false);
 
   const [hallObj, setHallObj] = useState({
     _id: 0,
@@ -23,6 +24,7 @@ const Halls = () => {
     subscriptions: "",
     images: [],
     createDate: "",
+    location: { coordinates: [33.363666, 44.404379] },
   });
 
   const addFormRef = useRef(null);
@@ -48,6 +50,7 @@ const Halls = () => {
         subscriptions: "",
         images: [],
         createDate: "",
+        location: { coordinates: [33.363666, 44.404379] },
       });
   }, [addBoxVisible]);
 
@@ -63,6 +66,12 @@ const Halls = () => {
 
   return (
     <>
+      <MapBox
+        visible={mapBoxVisible}
+        setVisible={(visible) => setMapBoxVisible(visible)}
+        lat={hallObj.location.coordinates[1]}
+        lng={hallObj.location.coordinates[0]}
+      />
       <DeleteBox
         visible={deleteBoxVisible}
         setVisible={setDeleteBoxVisible}
@@ -155,7 +164,7 @@ const Halls = () => {
               onChange: (e) =>
                 setHallObj({
                   ...hallObj,
-                  subscriptions: e.target.value,
+                  // subscriptions: e.target.value,
                 }),
             },
           },
@@ -177,6 +186,36 @@ const Halls = () => {
                   images: e.target.files,
                 }),
             },
+          },
+          {
+            tag: "input",
+            props: {
+              type: "hidden",
+              name: "lat",
+              value: hallObj.location.coordinates[1],
+            },
+          },
+          {
+            tag: "input",
+            props: {
+              type: "hidden",
+              name: "lng",
+              value: hallObj.location.coordinates[0],
+            },
+          },
+          {
+            tag: "location",
+            label: "تحديد المكان علي الخريطة",
+            setLocation: ({ lng, lat }) => {
+              addFormRef.current.lng.setAttribute("value", lng);
+              addFormRef.current.lat.setAttribute("value", lat);
+              setHallObj({
+                ...hallObj,
+                location: { coordinates: [lng, lat] },
+              });
+            },
+            lng: hallObj.location.coordinates[0],
+            lat: hallObj.location.coordinates[1],
           },
         ]}
       />
@@ -288,6 +327,34 @@ const Halls = () => {
                 }),
             },
           },
+          {
+            tag: "input",
+            props: {
+              type: "hidden",
+              name: "lat",
+            },
+          },
+          {
+            tag: "input",
+            props: {
+              type: "hidden",
+              name: "lng",
+            },
+          },
+          {
+            tag: "location",
+            label: "تحديد المكان علي الخريطة",
+            setLocation: (location) => {
+              editFormRef.current.lng.setAttribute("value", location.lng);
+              editFormRef.current.lat.setAttribute("value", location.lat);
+              setHallObj({
+                ...hallObj,
+                location: { coordinates: [location.lng, location.lat] },
+              });
+            },
+            lng: hallObj.location.coordinates[0],
+            lat: hallObj.location.coordinates[1],
+          },
         ]}
       />
       <div className="main-container">
@@ -329,7 +396,14 @@ const Halls = () => {
                 { type: "slider", images: u.images },
                 u.brief,
                 u.city,
-                { type: "location", location: u.location },
+                {
+                  type: "location",
+                  location: u.location,
+                  onClick: () => {
+                    setMapBoxVisible(true);
+                    setHallObj(u);
+                  },
+                },
                 `${u.subscriptions.map((s) => s.price + " " + s.name)}`,
                 u.createDate,
               ])

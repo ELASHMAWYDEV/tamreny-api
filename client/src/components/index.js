@@ -5,4 +5,5 @@ export { default as Table } from "./Table/Table";
 export { default as DataBox } from "./DataBox/DataBox";
 export { default as SearchBox } from "./SearchBox/SearchBox";
 export { default as DeleteBox } from "./DeleteBox/DeleteBox";
+export { default as MapBox } from "./MapBox/MapBox";
 

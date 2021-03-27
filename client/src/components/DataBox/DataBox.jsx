@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, A11y } from "swiper";
+import GoogleMapReact from "google-map-react";
 
 //Style
 import "./style.scss";
@@ -8,6 +9,10 @@ import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 import "swiper/components/pagination/pagination.scss";
 import "swiper/components/scrollbar/scrollbar.scss";
+
+//Assets
+// @ts-ignore
+import LocationMark from "../../assets/img/location-mark.svg";
 
 SwiperCore.use([Pagination, A11y]);
 
@@ -124,7 +129,32 @@ const DataBox = ({ options, inputs, visible, setVisible }) => {
                         style={{ height: 250, minWidth: "auto" }}
                       ></textarea>
                     </div>
-                  ) : null
+                  ) : input.tag == "location" ? (
+                    <div className="map-box">
+                      <GoogleMapReact
+                        bootstrapURLKeys={{
+                          key: "AIzaSyDUZp6H0YLdfkwOA7EZwEv6ndNAkjleN9w",
+                        }}
+                        defaultCenter={{
+                          lat: input.lat,
+                          lng: input.lng,
+                        }}
+                        defaultZoom={16}
+                        onClick={(data) => {
+                          input.setLocation({ lng: data.lng, lat: data.lat });
+                        }}
+                      >
+                        <img
+                          src={LocationMark}
+                          lat={input.lat}
+                          lng={input.lng}
+                          className="mark-img"
+                        />
+                      </GoogleMapReact>
+                    </div>
+                  ) : (
+                    <></>
+                  )
                 )}
               <div className="input-item">
                 <button

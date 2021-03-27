@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
 
     /********************************************************/
 
-    let { name, city, brief, subscriptions, location, images } = validateHall;
+    let { name, city, brief, subscriptions, lat, lng, images } = validateHall;
 
     let imagesToSave = [];
 
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
       brief,
       subscriptions,
       location: {
-        coordinates: [location.lng, location.lat],
+        coordinates: [lng, lat],
       },
       images: images.length != 0 ? imagesToSave : ["404.png"],
     });

@@ -6,7 +6,8 @@ module.exports = async ({
   city,
   brief,
   subscriptions,
-  location,
+  lat,
+  lng,
 }) => {
   try {
     let errors = [];
@@ -27,8 +28,7 @@ module.exports = async ({
         !subscriptions[0].price)
     )
       errors.push("يجب كتابة أنواع الاشتراكات");
-    if (!(location && location.lat && location.lng))
-      errors.push("يجب تحديد مكان القاعة علي الخريطة");
+    if (!(lat && lng)) errors.push("يجب تحديد مكان القاعة علي الخريطة");
 
     //Send any empty errors
     if (errors.length !== 0)
@@ -65,7 +65,8 @@ module.exports = async ({
       city,
       brief,
       subscriptions,
-      location,
+      lat,
+      lng,
       images,
     };
   } catch (e) {
